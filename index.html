@@ -1,964 +1,277 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Meow Mayhem: Alien Ambush (Fixed Screen)</title>
-<style>
-  html,body{margin:0;height:100%;background:#05070a;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue",Arial;overflow:hidden}
-  canvas{display:block;width:100vw;height:100vh}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Performance & Advisory</title>
 
-  /* UI */
-  #ui{position:fixed;inset:0;pointer-events:none}
-  .top{
-    position:fixed;left:0;right:0;top:0;
-    display:flex;gap:10px;align-items:center;flex-wrap:wrap;
-    padding:10px 12px;
-    background:linear-gradient(to bottom, rgba(0,0,0,.62), rgba(0,0,0,.22));
-    border-bottom:1px solid rgba(255,255,255,.06);
-    backdrop-filter: blur(6px);
-  }
-  .pill{padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);font-weight:900;letter-spacing:.2px}
-  .row{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{padding:4px 8px;border-radius:999px;font-weight:1000;font-size:14px}
-  .p1{background:#ff9aa2;color:#2a1a1d}
-  .p2{background:#9ad1ff;color:#121a24}
-  .status{flex:1;opacity:.95;min-width:220px}
-  .bottom{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);opacity:.85;font-size:13px}
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #111111;
+      --muted: #666666;
+      --border: #e5e5e5;
+      --accent: #1f3a5f;
+    }
 
-  /* Start */
-  .center{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;max-width:720px;padding:0 18px}
-  .btn{display:inline-block;padding:12px 18px;border-radius:12px;background:#1f2330;font-weight:1000;cursor:pointer;pointer-events:auto;box-shadow:0 10px 28px rgba(0,0,0,.55)}
-  .hint{opacity:.8;margin-top:10px;font-size:14px;line-height:1.35}
+    * {
+      box-sizing: border-box;
+    }
 
-  /* Cat images */
-  #catsLayer{position:fixed;inset:0;pointer-events:none;z-index:8}
-  .cat-img{
-    position:absolute;
-    transform:translate(-50%,-50%);
-    width:52px;height:52px;
-    object-fit:cover;border-radius:50%;
-    filter:contrast(1.08) brightness(.95) saturate(1.05);
-  }
-  .amok{filter:contrast(1.2) brightness(1.05) saturate(1.2) drop-shadow(0 0 14px rgba(255,120,0,.45));}
-  .panic{animation:panicShake .18s infinite;}
-  @keyframes panicShake{
-    0%{transform:translate(-50%,-50%) rotate(-2deg)}
-    50%{transform:translate(-50%,-50%) rotate(2deg)}
-    100%{transform:translate(-50%,-50%) rotate(-2deg)}
-  }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
 
-  /* Scary overlays */
-  .scanlines{
-    position:fixed;inset:0;pointer-events:none;z-index:30;
-    background:
-      repeating-linear-gradient(to bottom,
-        rgba(255,255,255,.04) 0px,
-        rgba(255,255,255,.04) 1px,
-        rgba(0,0,0,0) 3px,
-        rgba(0,0,0,0) 6px);
-    mix-blend-mode:overlay;
-    opacity:.22;
-  }
-  .vignette{
-    position:fixed;inset:0;pointer-events:none;z-index:31;
-    background:radial-gradient(circle at 50% 45%, rgba(0,0,0,0) 0%, rgba(0,0,0,.35) 55%, rgba(0,0,0,.75) 100%);
-  }
-  .fog{
-    position:fixed;inset:-40px;pointer-events:none;z-index:29;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(90,255,205,.08), rgba(0,0,0,0) 55%),
-      radial-gradient(circle at 70% 60%, rgba(255,80,160,.06), rgba(0,0,0,0) 55%),
-      radial-gradient(circle at 50% 10%, rgba(255,180,80,.04), rgba(0,0,0,0) 60%);
-    animation:fogMove 8s linear infinite;
-    opacity:.75;
-  }
-  @keyframes fogMove{
-    0%{transform:translate(0,0)}
-    50%{transform:translate(-20px,14px)}
-    100%{transform:translate(0,0)}
-  }
+    .container {
+      max-width: 720px;
+      padding: 24px 18px 64px;
+      margin: 0 auto;
+    }
 
-  /* Found flash */
-  .foundFlash{
-    position:fixed;inset:0;pointer-events:none;z-index:50;
-    background:rgba(255,40,40,.18);
-    animation:flash 450ms ease-in-out 0s 2;
-    display:none;
-  }
-  @keyframes flash{
-    0%{opacity:0}
-    30%{opacity:1}
-    100%{opacity:0}
-  }
+    h1, h2, h3 {
+      font-weight: 600;
+      margin: 0 0 12px;
+    }
 
-  /* Chaos overlay */
-  .chaos{
-    position:fixed;inset:0;pointer-events:none;z-index:40;
-    background:rgba(255,120,0,.08);
-    mix-blend-mode:screen;
-    animation:chaosPulse 1.05s infinite;
-    display:none;
-  }
-  @keyframes chaosPulse{
-    0%{opacity:.10}
-    50%{opacity:.55}
-    100%{opacity:.10}
-  }
-</style>
+    h1 {
+      font-size: 1.6rem;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-top: 36px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--text);
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .divider {
+      border-top: 1px solid var(--border);
+      margin: 32px 0;
+    }
+
+    /* Top section */
+    .top {
+      margin-bottom: 28px;
+    }
+
+    .sub {
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .proof-strip {
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .proof-strip span {
+      display: inline-block;
+      margin-right: 12px;
+    }
+
+    /* Expandable sections */
+    .item {
+      border-top: 1px solid var(--border);
+      padding: 16px 0;
+    }
+
+    .item button {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      text-align: left;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .item button:focus {
+      outline: none;
+    }
+
+    .item-content {
+      display: none;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+
+    .item-content ul {
+      padding-left: 18px;
+      margin: 8px 0;
+    }
+
+    .item-content li {
+      margin-bottom: 6px;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-top: 6px;
+    }
+
+    /* What I do */
+    .list {
+      padding-left: 18px;
+      margin: 12px 0;
+    }
+
+    /* Contact */
+    .contact a {
+      display: block;
+      text-decoration: none;
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    /* Small screens tuning */
+    @media (min-width: 768px) {
+      h1 {
+        font-size: 1.9rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<canvas id="game"></canvas>
+  <main class="container">
 
-<div id="catsLayer"></div>
+    <!-- TOP -->
+    <section class="top">
+      <h1>Business performance & decision support</h1>
+      <p class="sub">ACCA (71% avg, straight passer) · SME-focused advisory</p>
 
-<div id="ui">
-  <div class="top">
-    <div class="pill">👽 Alien Ambush — Fixed Screen</div>
-    <div class="row" id="hud"></div>
-    <div class="pill" id="timer">Chaos in: 25s</div>
-    <div class="status" id="status"></div>
-  </div>
+      <div class="proof-strip">
+        <span>ACCA (APM, AFM)</span>
+        <span>Triathlon finisher</span>
+        <span>OrderSaap system</span>
+        <span>Dental clinic dashboard</span>
+      </div>
+    </section>
 
-  <div class="center" id="startScreen">
-    <div style="font-size:44px;font-weight:1000;margin-bottom:6px;">Meow Mayhem: Alien Ambush</div>
-    <div style="opacity:.9;margin-bottom:16px;">
-      Hide in bushes 🌿 & trees 🌳. Avoid aliens 👽. Find the “?” box to go <b>AMOK</b>.
-      <div style="opacity:.75;margin-top:6px;font-size:13px;">(Single-screen arena — both players share one view.)</div>
-    </div>
-    <div class="btn" id="startBtn">Press ENTER or Click to Start</div>
-    <div class="hint">
-      P1: WASD + F (panic dash) • P2: Arrows + / (panic dash)<br/>
-      You can be caught <b>3 times</b>. Touch “?” to go AMOK and eat aliens (and your “friend”).
-    </div>
-  </div>
+    <!-- WORK -->
+    <section>
+      <h2>Selected work</h2>
 
-  <div class="bottom">Pause: <b>P</b> • Restart: <b>R</b></div>
-</div>
+      <div class="item">
+        <button data-toggle>
+          OrderSaap — WhatsApp operations system
+        </button>
+        <div class="item-content">
+          <p>
+            WhatsApp-based order, operations, and tracking system for SMEs.
+          </p>
+          <ul>
+            <li>Centralised order intake via WhatsApp Cloud API</li>
+            <li>Operational tracking and visibility</li>
+            <li>Reduced fragmented communication</li>
+          </ul>
+          <span class="tag">Built & deployed</span>
+        </div>
+      </div>
 
-<div class="fog"></div>
-<div class="scanlines"></div>
-<div class="vignette"></div>
-<div class="chaos" id="chaosOverlay"></div>
-<div class="foundFlash" id="foundFlash"></div>
+      <div class="item">
+        <button data-toggle>
+          Dental clinic — performance & diagnostic dashboard
+        </button>
+        <div class="item-content">
+          <p>
+            Diagnostic dashboard focused on revenue, patient flow, and utilisation.
+          </p>
+          <ul>
+            <li>Patient trend and repeat-visit analysis</li>
+            <li>Chair utilisation and revenue indicators</li>
+            <li>Used for owner-level decision making</li>
+          </ul>
+          <p class="muted">
+            Not audit. Not tax. Performance diagnosis.
+          </p>
+          <span class="tag">Decision support</span>
+        </div>
+      </div>
 
-<script>
-(() => {
-  // ====== CONFIG ======
-  const CONFIG = {
-    maxPlayers: 2,
-    lives: 3,
+      <div class="item">
+        <button data-toggle>
+          Triathlon — sprint category finisher
+        </button>
+        <div class="item-content">
+          <p>
+            Execution under fatigue. Consistent training. Finished what was started.
+          </p>
+          <span class="tag">Discipline & delivery</span>
+        </div>
+      </div>
+    </section>
 
-    // arena (single screen, no camera)
-    boundsPad: 16,
+    <div class="divider"></div>
 
-    // players
-    baseSpeed: 2.55,
-    friction: 0.86,
-    playerR: 22,
+    <!-- WHAT I DO -->
+    <section>
+      <h2>What I work on</h2>
+      <ul class="list">
+        <li>Business performance analysis</li>
+        <li>KPI dashboards & diagnostics</li>
+        <li>Decision support for owners</li>
+        <li>Short, focused problem engagements</li>
+      </ul>
+      <p class="muted">
+        Not audit · Not tax · Not bookkeeping
+      </p>
+    </section>
 
-    dashBoost: 4.8,
-    dashMs: 260,
-    dashCooldownMs: 1100,
+    <div class="divider"></div>
 
-    // aliens
-    alienBase: 6,
-    alienChaosExtra: 9,
-    alienR: 18,
-    alienSpeed: 1.65,
-    alienChaseSpeed: 2.75,
-    alienViewDist: 300,
-    alienFovCos: Math.cos((78 * Math.PI/180)),
-    alienLoseSightMs: 700,
-    alienRageAccel: 1.12,  // escalates over time (spice)
+    <!-- ENGAGEMENT -->
+    <section>
+      <h2>How I engage</h2>
+      <p>
+        Short-term, project-based work.
+        Comparable to an intern in commitment, but outcome-driven.
+        No long-term obligation unless there is clear fit.
+      </p>
+    </section>
 
-    // obstacles
-    obstacleCount: 30,
+    <div class="divider"></div>
 
-    // question box / amok
-    amokMs: 11000,
-    amokSizeMul: 2.05,
-    amokEatMul: 1.25,
+    <!-- CONTACT -->
+    <section class="contact">
+      <h2>Contact</h2>
+      <a href="mailto:yourname@email.com">yourname@email.com</a>
+      <a href="https://wa.me/601XXXXXXXX">WhatsApp</a>
+    </section>
 
-    // chaos mode
-    chaosIntervalMs: 25000,
-    chaosDurationMs: 9000,
-    chaosPlayerSpeedMul: 1.25,
-    chaosAlienSpeedMul: 1.25,
+  </main>
 
-    // rage-bait text intensity (set false to calm)
-    taunts: true,
-  };
+  <script>
+    document.querySelectorAll('[data-toggle]').forEach(button => {
+      button.addEventListener('click', () => {
+        const content = button.nextElementSibling;
+        const isOpen = content.style.display === 'block';
 
-  // ====== CAT GIFS (same as your original) ======
-  const CAT_GIFS = [
-    "https://media.tenor.com/SuVGs-GL7RoAAAAi/shocked-shocked-cat.gif",
-    "https://media.tenor.com/Ym6VeAcZoTcAAAAi/aaaah-cat.gif",
-    "https://media.tenor.com/1Z8PTLFT8HUAAAAi/voices-cat.gif",
-    "https://media.tenor.com/T_avUEk3aWwAAAAi/catgroove7tv-catgroove.gif",
-    "https://media.tenor.com/y-Ew-QGLcpYAAAAi/shrek-cat.gif",
-  ];
+        document.querySelectorAll('.item-content').forEach(c => {
+          c.style.display = 'none';
+        });
 
-  const SKINS = [
-    { name:"Grumpy", chip:"p1", color:"#ff9aa2", gifIndex: 0 },
-    { name:"Nyan", chip:"p2", color:"#9ad1ff", gifIndex: 1 },
-  ];
-
-  const CONTROL_SETS = [
-    { up:'w', down:'s', left:'a', right:'d', dash:'f' },
-    { up:'ArrowUp', down:'ArrowDown', left:'ArrowLeft', right:'ArrowRight', dash:'/' },
-  ];
-
-  // ====== INPUT ======
-  const keys = new Set();
-  addEventListener('keydown', (e) => {
-    keys.add(e.key);
-    if (e.key === 'Enter') start();
-    if (e.key === ' ') e.preventDefault();
-  });
-  addEventListener('keyup', (e) => keys.delete(e.key));
-
-  // ====== CANVAS ======
-  const canvas = document.getElementById('game');
-  const ctx = canvas.getContext('2d');
-  let W=0,H=0;
-  const DPR = Math.max(1, Math.min(2, window.devicePixelRatio||1));
-  function resize(){
-    W = Math.floor(innerWidth);
-    H = Math.floor(innerHeight);
-    canvas.width = Math.floor(W*DPR);
-    canvas.height = Math.floor(H*DPR);
-    canvas.style.width = W+"px";
-    canvas.style.height = H+"px";
-    ctx.setTransform(DPR,0,0,DPR,0,0);
-  }
-  resize();
-  addEventListener('resize', resize);
-
-  // ====== UI ======
-  const ui = {
-    hud: document.getElementById('hud'),
-    status: document.getElementById('status'),
-    timer: document.getElementById('timer'),
-    startScreen: document.getElementById('startScreen'),
-    startBtn: document.getElementById('startBtn'),
-    chaosOverlay: document.getElementById('chaosOverlay'),
-    foundFlash: document.getElementById('foundFlash'),
-    catsLayer: document.getElementById('catsLayer'),
-  };
-
-  function setStatus(msg){ ui.status.textContent = msg || ""; }
-  function flashFound(){
-    ui.foundFlash.style.display = 'block';
-    ui.foundFlash.style.animation = 'none';
-    void ui.foundFlash.offsetHeight;
-    ui.foundFlash.style.animation = '';
-    setTimeout(()=> ui.foundFlash.style.display='none', 900);
-  }
-
-  // ====== UTIL ======
-  const rnd = (a,b)=> a + Math.random()*(b-a);
-  const clamp = (v,a,b)=> Math.max(a, Math.min(b, v));
-  function circleHit(ax,ay,ar,bx,by,br){ return Math.hypot(ax-bx, ay-by) <= ar+br; }
-  function segCircle(x1,y1,x2,y2,cx,cy,r){
-    const dx=x2-x1, dy=y2-y1;
-    const l2=dx*dx+dy*dy;
-    if (l2===0) return Math.hypot(cx-x1, cy-y1) <= r;
-    let t=((cx-x1)*dx+(cy-y1)*dy)/l2;
-    t=clamp(t,0,1);
-    const px=x1+t*dx, py=y1+t*dy;
-    return Math.hypot(cx-px, cy-py) <= r;
-  }
-
-  // ====== ENTITIES ======
-  const players = [];
-  const aliens = [];
-  const obstacles = [];
-  let questionBox = null;
-
-  let running=false, paused=false;
-  let last = performance.now();
-  let acc = 0;
-  const dt = 1000/60;
-
-  let chaosActive=false;
-  let nextChaosAt=0;
-  let chaosEndAt=0;
-
-  let rageLevel = 0; // increases over time => aliens get nastier
-  let lastTauntAt = 0;
-
-  // ====== OBSTACLES / LOS ======
-  function blockedLOS(ax,ay,bx,by){
-    for (const o of obstacles){
-      if (segCircle(ax,ay,bx,by, o.x,o.y, o.blockR)) return true;
-    }
-    return false;
-  }
-
-  function spawnObstacles(){
-    obstacles.length=0;
-    for (let i=0;i<CONFIG.obstacleCount;i++){
-      const kind = Math.random()<0.55 ? 'bush' : 'tree';
-      const r = kind==='bush' ? rnd(30, 48) : rnd(38, 64);
-      obstacles.push({
-        kind,
-        x: rnd(90, W-90),
-        y: rnd(110, H-90),
-        r,
-        blockR: r*(kind==='bush'?0.95:1.05),
-        sway: rnd(0, Math.PI*2),
+        content.style.display = isOpen ? 'none' : 'block';
       });
-    }
-  }
-
-  function spawnQuestionBox(){
-    questionBox = {
-      x: rnd(80, W-80),
-      y: rnd(90, H-80),
-      r: 18,
-      bob: 0
-    };
-  }
-
-  // ====== CAT IMAGES ======
-  function createCatImg(p){
-    const img = document.createElement('img');
-    img.className = 'cat-img';
-    img.src = CAT_GIFS[p.skin.gifIndex];
-    img.id = `cat-${p.id}`;
-    ui.catsLayer.appendChild(img);
-    return img;
-  }
-  function updateCatImgs(){
-    const now = performance.now();
-    for (const p of players){
-      if (!p.img) continue;
-      p.img.style.left = `${p.x}px`;
-      p.img.style.top = `${p.y}px`;
-
-      const amok = now < p.amokUntil;
-      const r = amok ? CONFIG.playerR*CONFIG.amokSizeMul : CONFIG.playerR;
-      p.img.style.width = `${r*2}px`;
-      p.img.style.height = `${r*2}px`;
-
-      p.img.classList.toggle('amok', amok);
-      p.img.classList.toggle('panic', now < p.dashUntil);
-
-      // glow feedback
-      if (now < p.invulnUntil) {
-        p.img.style.boxShadow = '0 0 0 3px rgba(255,255,255,.25), 0 0 18px rgba(255,70,70,.55)';
-        p.img.style.opacity = (Math.floor(now/90)%2) ? '0.35' : '1';
-      } else {
-        p.img.style.opacity = '1';
-        p.img.style.boxShadow = amok
-          ? '0 0 0 3px rgba(255,170,60,.30), 0 0 26px rgba(255,120,0,.55)'
-          : '0 0 0 2px rgba(255,255,255,.10)';
-      }
-    }
-  }
-
-  // ====== SPAWNS ======
-  function spawnPlayers(n=CONFIG.maxPlayers){
-    ui.catsLayer.innerHTML='';
-    players.length=0;
-    for (let i=0;i<n;i++){
-      const skin = SKINS[i];
-      const p = {
-        id:i,
-        skin,
-        x: i===0 ? W*0.22 : W*0.78,
-        y: H*0.55 + (i===0 ? -70 : 70),
-        vx:0, vy:0,
-        livesLeft: CONFIG.lives,
-        dead:false,
-        controls: CONTROL_SETS[i],
-
-        dashUntil:0,
-        dashCdUntil:0,
-
-        invulnUntil:0,
-        amokUntil:0,
-      };
-      p.img = createCatImg(p);
-      players.push(p);
-    }
-    renderHUD();
-  }
-
-  function spawnAlien(){
-    const side = Math.floor(rnd(0,4));
-    let x,y;
-    if (side===0){ x=rnd(30, W-30); y=60; }
-    else if (side===1){ x=rnd(30, W-30); y=H-30; }
-    else if (side===2){ x=30; y=rnd(70, H-30); }
-    else { x=W-30; y=rnd(70, H-30); }
-
-    aliens.push({
-      x,y,
-      vx:0, vy:0,
-      r: CONFIG.alienR,
-      dir: rnd(0, Math.PI*2),
-      patrolTurn: rnd(0.01,0.06),
-      state:'patrol',
-      targetId:null,
-      lastSeenAt:-99999,
-      wobble:rnd(0,Math.PI*2),
-      beam:0, // caught animation
     });
-  }
-  function spawnAliens(count){
-    for (let i=0;i<count;i++) spawnAlien();
-  }
-
-  // ====== HUD ======
-  function renderHUD(){
-    ui.hud.innerHTML='';
-    const now = performance.now();
-    for (const p of players){
-      const span = document.createElement('span');
-      span.className = `chip ${p.skin.chip}`;
-      const amok = now < p.amokUntil ? " AMOK" : "";
-      const dead = p.dead ? " (OUT)" : "";
-      span.textContent = `😼 ${p.skin.name}: ${p.livesLeft}❤${amok}${dead}`;
-      ui.hud.appendChild(span);
-    }
-  }
-
-  // ====== CHAOS MODE ======
-  function setChaosUI(on){ ui.chaosOverlay.style.display = on ? 'block' : 'none'; }
-  function updateChaosTimer(){
-    const now = performance.now();
-    if (!chaosActive){
-      ui.timer.textContent = `Chaos in: ${Math.max(0, Math.ceil((nextChaosAt-now)/1000))}s`;
-    } else {
-      ui.timer.textContent = `CHAOS: ${Math.max(0, Math.ceil((chaosEndAt-now)/1000))}s`;
-    }
-  }
-  function maybeChaos(){
-    const now = performance.now();
-    if (!chaosActive && now >= nextChaosAt){
-      chaosActive = true;
-      chaosEndAt = now + CONFIG.chaosDurationMs;
-      setChaosUI(true);
-      spawnAliens(CONFIG.alienChaosExtra);
-      setStatus(CONFIG.taunts ? "🔥 CHAOS MODE: run. faster. they multiply." : "🔥 CHAOS MODE!");
-    }
-    if (chaosActive && now >= chaosEndAt){
-      chaosActive = false;
-      setChaosUI(false);
-      setStatus("");
-      nextChaosAt = now + CONFIG.chaosIntervalMs;
-    }
-  }
-
-  // ====== GAME LOGIC ======
-  function catchPlayer(p, cause){
-    const now = performance.now();
-    if (p.dead) return;
-
-    p.livesLeft -= 1;
-    p.invulnUntil = now + 1300;
-
-    flashFound();
-
-    if (CONFIG.taunts){
-      const msgs = [
-        `${p.skin.name} got scanned. Again.`,
-        `Skill issue detected: ${p.skin.name} was found.`,
-        `${p.skin.name} hesitated. The alien didn't.`,
-        `Imagine getting spotted in a bush. (${p.skin.name})`,
-      ];
-      setStatus(msgs[Math.floor(Math.random()*msgs.length)]);
-    } else {
-      setStatus(`${p.skin.name} was caught! (-1 life)`);
-    }
-
-    renderHUD();
-
-    if (p.livesLeft <= 0){
-      p.dead = true;
-      setStatus(CONFIG.taunts ? `${p.skin.name} is OUT. Brutal.` : `${p.skin.name} is OUT.`);
-      renderHUD();
-    }
-
-    // respawn reposition (still on same screen)
-    p.x = rnd(80, W-80);
-    p.y = rnd(90, H-80);
-    p.vx = p.vy = 0;
-
-    const alive = players.filter(pp => !pp.dead);
-    if (alive.length <= 1){
-      paused = true;
-      const winner = alive[0];
-      setStatus(winner ? `🏆 ${winner.skin.name} survives. Press R.` : `No survivors. Press R.`);
-    }
-  }
-
-  function handleInput(p){
-    if (p.dead) return;
-    const now = performance.now();
-
-    let up = keys.has(p.controls.up) || keys.has(p.controls.up.toUpperCase());
-    let down = keys.has(p.controls.down) || keys.has(p.controls.down.toUpperCase());
-    let left = keys.has(p.controls.left) || keys.has(p.controls.left.toUpperCase());
-    let right = keys.has(p.controls.right) || keys.has(p.controls.right.toUpperCase());
-
-    let speed = CONFIG.baseSpeed * (chaosActive ? CONFIG.chaosPlayerSpeedMul : 1);
-
-    if (keys.has(p.controls.dash) && now > p.dashCdUntil){
-      p.dashUntil = now + CONFIG.dashMs;
-      p.dashCdUntil = now + CONFIG.dashCooldownMs;
-    }
-    if (now < p.dashUntil) speed += CONFIG.dashBoost;
-    if (now < p.amokUntil) speed *= 1.12;
-
-    if (up) p.vy -= speed*0.62;
-    if (down) p.vy += speed*0.62;
-    if (left) p.vx -= speed*0.62;
-    if (right) p.vx += speed*0.62;
-  }
-
-  function updatePlayer(p){
-    const now = performance.now();
-    if (p.dead) return;
-
-    p.vx *= CONFIG.friction;
-    p.vy *= CONFIG.friction;
-
-    p.x += p.vx;
-    p.y += p.vy;
-
-    const r = CONFIG.playerR * (now < p.amokUntil ? CONFIG.amokSizeMul : 1);
-    p.x = clamp(p.x, CONFIG.boundsPad + r, W - CONFIG.boundsPad - r);
-    p.y = clamp(p.y, 60 + r, H - CONFIG.boundsPad - r); // keep below topbar
-
-    // question box -> AMOK
-    if (questionBox && circleHit(p.x,p.y,r, questionBox.x,questionBox.y, questionBox.r)){
-      p.amokUntil = now + CONFIG.amokMs;
-      spawnQuestionBox();
-      renderHUD();
-
-      setStatus(CONFIG.taunts
-        ? `💥 ${p.skin.name} touched the ? box. Congrats: you're the problem now.`
-        : `💥 ${p.skin.name} went AMOK!`);
-    }
-  }
-
-  function applyAmok(){
-    const now = performance.now();
-    for (const eater of players){
-      if (eater.dead) continue;
-      if (now >= eater.amokUntil) continue;
-
-      const r = CONFIG.playerR * CONFIG.amokSizeMul;
-      const eatR = r * CONFIG.amokEatMul;
-
-      // eat aliens
-      for (let i=aliens.length-1;i>=0;i--){
-        const a = aliens[i];
-        if (circleHit(eater.x,eater.y,eatR, a.x,a.y,a.r)){
-          aliens.splice(i,1);
-          if (Math.random()<0.2) setStatus(CONFIG.taunts ? "👹 Crunch. One less problem." : "👹 Alien eaten!");
-        }
-      }
-
-      // eat other player
-      for (const victim of players){
-        if (victim === eater) continue;
-        if (victim.dead) continue;
-        const vr = CONFIG.playerR * (now < victim.amokUntil ? CONFIG.amokSizeMul : 1);
-        if (circleHit(eater.x,eater.y,eatR, victim.x,victim.y,vr)){
-          catchPlayer(victim, {byPlayer:true});
-        }
-      }
-    }
-  }
-
-  function alienCanSee(a, p){
-    if (p.dead) return false;
-    const now = performance.now();
-    const pr = CONFIG.playerR * (now < p.amokUntil ? CONFIG.amokSizeMul : 1);
-    const dx = p.x - a.x;
-    const dy = p.y - a.y;
-    const d = Math.hypot(dx,dy);
-    if (d > CONFIG.alienViewDist + (now < p.amokUntil ? 40 : 0)) return false; // AMOK easier to spot
-
-    const ndx = dx/(d||1), ndy = dy/(d||1);
-    const fx = Math.cos(a.dir), fy = Math.sin(a.dir);
-    const dot = ndx*fx + ndy*fy;
-    if (dot < CONFIG.alienFovCos) return false;
-
-    if (blockedLOS(a.x,a.y, p.x,p.y)) return false;
-    return true;
-  }
-
-  function updateAlien(a){
-    const now = performance.now();
-    a.wobble += 0.08;
-
-    // beam animation decay
-    a.beam *= 0.9;
-
-    // target selection
-    let best=null, bestD=Infinity;
-    for (const p of players){
-      if (alienCanSee(a,p)){
-        const d = Math.hypot(p.x-a.x, p.y-a.y);
-        if (d < bestD){ bestD=d; best=p; }
-      }
-    }
-
-    if (best){
-      a.state='chase';
-      a.targetId=best.id;
-      a.lastSeenAt=now;
-    } else if (a.state==='chase' && (now-a.lastSeenAt) > CONFIG.alienLoseSightMs){
-      a.state='patrol';
-      a.targetId=null;
-    }
-
-    // escalating rage makes aliens nastier over time
-    const rageMul = 1 + rageLevel*0.045;
-
-    let spPatrol = CONFIG.alienSpeed * rageMul;
-    let spChase = CONFIG.alienChaseSpeed * rageMul;
-
-    if (chaosActive){
-      spPatrol *= CONFIG.chaosAlienSpeedMul;
-      spChase *= CONFIG.chaosAlienSpeedMul;
-    }
-
-    if (a.state==='chase' && a.targetId!=null){
-      const p = players[a.targetId];
-      if (p && !p.dead){
-        const dx = p.x-a.x, dy=p.y-a.y;
-        const d = Math.hypot(dx,dy)||1;
-        a.vx = (dx/d)*spChase;
-        a.vy = (dy/d)*spChase;
-        a.dir = Math.atan2(a.vy, a.vx);
-      }
-    } else {
-      // patrol drift
-      a.dir += (Math.sin(a.wobble)*0.02) + (Math.random()<0.03 ? rnd(-a.patrolTurn, a.patrolTurn) : 0);
-      a.vx = Math.cos(a.dir)*spPatrol;
-      a.vy = Math.sin(a.dir)*spPatrol;
-    }
-
-    a.x += a.vx;
-    a.y += a.vy;
-
-    // bounds bounce (keep below top bar)
-    const topLimit = 60 + a.r;
-    if (a.x < a.r || a.x > W-a.r){ a.dir = Math.PI - a.dir; a.x = clamp(a.x, a.r, W-a.r); }
-    if (a.y < topLimit || a.y > H-a.r){ a.dir = -a.dir; a.y = clamp(a.y, topLimit, H-a.r); }
-
-    // obstacle push-out
-    for (const o of obstacles){
-      const d = Math.hypot(a.x-o.x, a.y-o.y);
-      const min = a.r + o.r*0.82;
-      if (d>0 && d<min){
-        const nx=(a.x-o.x)/d, ny=(a.y-o.y)/d;
-        a.x = o.x + nx*min;
-        a.y = o.y + ny*min;
-        a.dir += rnd(-0.65, 0.65);
-      }
-    }
-
-    // catch players (unless AMOK => alien gets eaten)
-    for (const p of players){
-      if (p.dead) continue;
-      if (now < p.invulnUntil) continue;
-
-      const pr = CONFIG.playerR * (now < p.amokUntil ? CONFIG.amokSizeMul : 1);
-      if (circleHit(a.x,a.y,a.r, p.x,p.y, pr)){
-        if (now < p.amokUntil){
-          // AMOK eats alien on contact
-          const idx = aliens.indexOf(a);
-          if (idx>=0) aliens.splice(idx,1);
-          if (Math.random()<0.25) setStatus(CONFIG.taunts ? "👹 Alien tried it. Alien lost." : "👹 Alien eaten!");
-          return;
-        } else {
-          a.beam = 1; // show abduction beam effect
-          catchPlayer(p, {byAlien:true});
-          return;
-        }
-      }
-    }
-  }
-
-  // ====== RESET / START ======
-  function resetGame(){
-    paused=false;
-    chaosActive=false;
-    setChaosUI(false);
-    rageLevel = 0;
-    lastTauntAt = 0;
-
-    spawnObstacles();
-    spawnQuestionBox();
-    spawnPlayers(CONFIG.maxPlayers);
-
-    aliens.length=0;
-    spawnAliens(CONFIG.alienBase);
-
-    const now = performance.now();
-    nextChaosAt = now + CONFIG.chaosIntervalMs;
-    chaosEndAt = 0;
-
-    setStatus("Hide. Don't get scanned. Find the ? box.");
-    renderHUD();
-    updateChaosTimer();
-  }
-
-  function start(){
-    if (running) return;
-    running=true;
-    ui.startScreen.style.display='none';
-    resetGame();
-    last = performance.now();
-    requestAnimationFrame(loop);
-  }
-
-  ui.startBtn.addEventListener('click', start);
-
-  addEventListener('keydown', (e)=>{
-    if (e.key.toLowerCase()==='p'){ paused=!paused; setStatus(paused?"Paused":""); }
-    if (e.key.toLowerCase()==='r'){ resetGame(); }
-  });
-
-  // ====== RENDER ======
-  function renderBG(){
-    // deep space forest vibe
-    const g = ctx.createLinearGradient(0,0,0,H);
-    g.addColorStop(0, '#04060a');
-    g.addColorStop(1, '#071119');
-    ctx.fillStyle = g;
-    ctx.fillRect(0,0,W,H);
-
-    // faint grid
-    ctx.save();
-    ctx.globalAlpha = 0.07;
-    ctx.strokeStyle = '#ffffff';
-    for (let x=0; x<W; x+=60){
-      ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
-    }
-    for (let y=60; y<H; y+=60){
-      ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
-    }
-    ctx.restore();
-
-    // top dark strip safe area
-    ctx.fillStyle = 'rgba(0,0,0,.35)';
-    ctx.fillRect(0,0,W,60);
-  }
-
-  function drawObstacles(){
-    for (const o of obstacles){
-      o.sway += 0.02;
-      // shadow
-      ctx.save();
-      ctx.globalAlpha = 0.25;
-      ctx.fillStyle = '#000';
-      ctx.beginPath();
-      ctx.ellipse(o.x+5, o.y+7, o.r*1.02, o.r*0.78, 0, 0, Math.PI*2);
-      ctx.fill();
-      ctx.restore();
-
-      if (o.kind==='bush'){
-        const wig = Math.sin(o.sway)*2.4;
-        ctx.fillStyle = '#114f2b';
-        ctx.beginPath();
-        ctx.ellipse(o.x, o.y, o.r+wig, o.r*0.84, 0, 0, Math.PI*2);
-        ctx.fill();
-        ctx.fillStyle = 'rgba(140,255,210,.08)';
-        ctx.beginPath();
-        ctx.ellipse(o.x-o.r*0.25, o.y-o.r*0.2, o.r*0.35, o.r*0.25, 0, 0, Math.PI*2);
-        ctx.fill();
-      } else {
-        ctx.fillStyle = '#3e261a';
-        ctx.fillRect(o.x-6, o.y+o.r*0.18, 12, o.r*0.86);
-        const wig = Math.sin(o.sway)*2.0;
-        ctx.fillStyle = '#1d7a3a';
-        ctx.beginPath();
-        ctx.arc(o.x, o.y, o.r+wig, 0, Math.PI*2);
-        ctx.fill();
-        ctx.fillStyle = 'rgba(255,255,255,.06)';
-        ctx.beginPath();
-        ctx.arc(o.x-o.r*0.25, o.y-o.r*0.25, o.r*0.35, 0, Math.PI*2);
-        ctx.fill();
-      }
-    }
-  }
-
-  function drawQuestionBox(){
-    if (!questionBox) return;
-    questionBox.bob += 0.06;
-    const bobY = Math.sin(questionBox.bob)*4;
-
-    const x = questionBox.x;
-    const y = questionBox.y + bobY;
-
-    // glow
-    ctx.save();
-    const g = ctx.createRadialGradient(x,y, 6, x,y, 42);
-    g.addColorStop(0, 'rgba(255,210,110,.55)');
-    g.addColorStop(1, 'rgba(255,210,110,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x,y, 42, 0, Math.PI*2);
-    ctx.fill();
-    ctx.restore();
-
-    // box
-    ctx.fillStyle = '#f3c550';
-    ctx.strokeStyle = '#241b07';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    roundRect(ctx, x-16, y-16, 32, 32, 7);
-    ctx.fill(); ctx.stroke();
-
-    ctx.fillStyle = '#241b07';
-    ctx.font = '900 18px system-ui';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('?', x, y+1);
-  }
-
-  function drawAliens(){
-    for (const a of aliens){
-      // view cone subtle (scarier in chaos)
-      ctx.save();
-      ctx.globalAlpha = chaosActive ? 0.10 : 0.06;
-      ctx.fillStyle = a.state==='chase' ? 'rgba(255,80,170,.9)' : 'rgba(80,255,210,.9)';
-      ctx.beginPath();
-      ctx.moveTo(a.x,a.y);
-      ctx.arc(a.x,a.y, CONFIG.alienViewDist*0.43, a.dir-0.65, a.dir+0.65);
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-
-      // abduction beam when catching
-      if (a.beam > 0.01){
-        ctx.save();
-        ctx.globalAlpha = 0.20 + 0.35*a.beam;
-        ctx.fillStyle = 'rgba(150,255,220,.8)';
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(a.x-22, a.y+70);
-        ctx.lineTo(a.x+22, a.y+70);
-        ctx.closePath();
-        ctx.fill();
-        ctx.restore();
-      }
-
-      const pulse = Math.sin(a.wobble)*1.6;
-      ctx.fillStyle = a.state==='chase' ? '#ff4fb8' : '#52ffd2';
-      ctx.beginPath();
-      ctx.ellipse(a.x, a.y, a.r+2, a.r+7+pulse, 0, 0, Math.PI*2);
-      ctx.fill();
-
-      // eyes
-      ctx.fillStyle = '#05070a';
-      ctx.beginPath();
-      ctx.ellipse(a.x-5, a.y-3, 4, 6, 0, 0, Math.PI*2);
-      ctx.ellipse(a.x+5, a.y-3, 4, 6, 0, 0, Math.PI*2);
-      ctx.fill();
-
-      // mouth
-      ctx.strokeStyle = '#05070a';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(a.x, a.y+6, 6, 0, Math.PI);
-      ctx.stroke();
-    }
-  }
-
-  function render(){
-    renderBG();
-    drawObstacles();
-    drawQuestionBox();
-    drawAliens();
-    // players are DOM gifs (above canvas), so nothing here
-  }
-
-  // small roundRect helper
-  function roundRect(ctx,x,y,w,h,r){
-    r = Math.min(r, w/2, h/2);
-    ctx.beginPath();
-    ctx.moveTo(x+r, y);
-    ctx.arcTo(x+w, y, x+w, y+h, r);
-    ctx.arcTo(x+w, y+h, x, y+h, r);
-    ctx.arcTo(x, y+h, x, y, r);
-    ctx.arcTo(x, y, x+w, y, r);
-    ctx.closePath();
-  }
-
-  // ====== TAUNTS / SPICE ======
-  function maybeTaunt(){
-    if (!CONFIG.taunts) return;
-    const now = performance.now();
-    if (now - lastTauntAt < 5500) return;
-
-    // only taunt if game is ongoing
-    if (paused) return;
-
-    const msgs = [
-      "They saw you. You just haven't accepted it yet.",
-      "Bush gaming won't save you forever.",
-      "Chaos is coming. Pretend you're ready.",
-      "If you hear nothing… it's already behind you.",
-      "Stop panicking. Start dashing.",
-      "Congrats. The aliens are faster now.",
-    ];
-    // slightly higher chance as rage grows
-    if (Math.random() < 0.45 + rageLevel*0.03){
-      setStatus(msgs[Math.floor(Math.random()*msgs.length)]);
-      lastTauntAt = now;
-    }
-  }
-
-  // ====== MAIN TICK ======
-  function tick(){
-    maybeChaos();
-    updateChaosTimer();
-
-    // rage level slowly increases (spice)
-    rageLevel = Math.min(10, rageLevel + 0.0022); // about +0.13 per sec
-    maybeTaunt();
-
-    for (const p of players){ handleInput(p); updatePlayer(p); }
-    applyAmok();
-
-    // update aliens
-    for (let i=aliens.length-1;i>=0;i--) updateAlien(aliens[i]);
-
-    updateCatImgs();
-    renderHUD();
-  }
-
-  function loop(t){
-    requestAnimationFrame(loop);
-    if (!running) return;
-    if (paused) { render(); updateCatImgs(); return; }
-
-    let delta = t - last;
-    last = t;
-    if (delta > 120) delta = 120;
-    acc += delta;
-
-    while (acc >= dt){
-      tick();
-      acc -= dt;
-    }
-    render();
-  }
-
-  // ====== BOOT ======
-  // preload gifs
-  CAT_GIFS.forEach(url => { const img=new Image(); img.src=url; });
-
-})();
-</script>
+  </script>
 </body>
 </html>
