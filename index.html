@@ -155,6 +155,19 @@
   border: 2px solid rgba(31,58,95,0.06);
   display:block;
 }
+    video.responsive{
+  width:100%;
+  height:auto;           /* don't force full native height */
+  max-height:360px;      /* limit vertical space on phones */
+  display:block;
+  object-fit:cover;      /* crop nicely if needed */
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+@media(min-width:720px){
+  video.responsive{ max-height:480px; }
+}
+    
 @media (min-width:768px){
   .avatar img{ width:110px; height:110px; }
 }
@@ -250,13 +263,13 @@
         </ul>
 
         <video class="responsive"
-       src="images/clinic-demo.mp4"
        poster="images/clinic-dashboard.png"
        preload="metadata"
        playsinline
-       loop
        muted
+       loop
        controls>
+  <source src="images/clinic-demo.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
       </div>
