@@ -8,73 +8,44 @@
   <style>
   :root {
     --bg: #ffffff;
-    --card: #ffffff; [cite: 2]
+    --card: #ffffff;
     --text: #111111;
     --muted: #6b7280;
     --border: #e5e7eb;
     --accent: #1f3a5f;
     --shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     --radius: 14px;
-  } [cite: 3]
-
-  * {
-    box-sizing: border-box;
   }
 
+  * { box-sizing: border-box; }
+
   body {
-    margin: 0; [cite: 4]
+    margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.55;
-  } [cite: 5]
+  }
 
   .container {
-    max-width: 720px; [cite: 6]
+    max-width: 720px;
     padding: 22px 16px 64px;
     margin: 0 auto;
   }
 
-  h1 {
-    font-size: 1.65rem; [cite: 7]
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
+  h1 { font-size: 1.65rem; font-weight: 600; margin-bottom: 8px; }
+  h2 { font-size: 1.1rem; font-weight: 600; margin: 36px 0 12px; }
+  p { margin: 0 0 12px; }
+  .muted { color: var(--muted); font-size: 0.95rem; }
 
-  h2 {
-    font-size: 1.1rem; [cite: 8]
-    font-weight: 600;
-    margin: 36px 0 12px;
-  }
-
-  p {
-    margin: 0 0 12px;
-  }
-
-  .muted {
-    color: var(--muted); [cite: 9]
-    font-size: 0.95rem;
-  }
-
-  /* Top */
-  .top {
-    margin-bottom: 28px; [cite: 10]
-  }
-
-  .proof-strip {
-    margin-top: 14px; [cite: 11]
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-
-  .proof-strip span {
-    display: inline-block; [cite: 12]
-    margin-right: 10px;
-  }
+  /* Top Section */
+  .top { margin-bottom: 28px; }
+  .proof-strip { margin-top: 14px; font-size: 0.9rem; color: var(--muted); }
+  .proof-strip span { display: inline-block; margin-right: 10px; }
 
   /* Card base */
   .card {
-    background: var(--card); [cite: 13]
+    background: var(--card);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 16px 16px;
@@ -83,7 +54,7 @@
 
   /* Expandable cards */
   .item button {
-    background: none; [cite: 14]
+    background: none;
     border: none;
     padding: 0;
     width: 100%;
@@ -91,32 +62,22 @@
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-  } [cite: 15]
+    color: var(--text);
+  }
 
   .item-content {
-    display: none; [cite: 16]
+    display: none;
     margin-top: 12px;
     font-size: 0.95rem;
   }
 
-  .item-content ul {
-    padding-left: 18px; [cite: 17]
-    margin: 8px 0;
-  }
-
-  .item-content li {
-    margin-bottom: 6px;
-  }
+  .item-content ul { padding-left: 18px; margin: 8px 0; }
+  .item-content li { margin-bottom: 6px; }
 
   /* Action cards */
-  .actions {
-    display: grid; [cite: 19]
-    gap: 12px;
-    margin-top: 8px;
-  }
-
+  .actions { display: grid; gap: 12px; margin-top: 8px; }
   .action-card {
-    display: block; [cite: 20]
+    display: block;
     text-decoration: none;
     color: var(--text);
     background: var(--card);
@@ -126,197 +87,101 @@
     font-weight: 500;
   }
 
-  .action-card span {
-    display: block; [cite: 21]
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  .avatar {
-    display: flex; [cite: 22]
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 12px;
-  }
-  
+  .avatar { display: flex; justify-content: center; align-items: center; margin-bottom: 12px; }
   .avatar img {
-    width: 88px; [cite: 22]
-    height: 88px;
+    width: 88px; height: 88px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 6px 16px rgba(31,58,95,0.10);
     border: 2px solid rgba(31,58,95,0.06);
   }
 
-  /* Video Fix for 1:1 Ratio */
+  /* 1:1 Video Fix */
   video.responsive {
-    width: 100%; 
+    width: 100%;
+    max-width: 100%;
     height: auto;
-    aspect-ratio: 1 / 1; /* Forces square frame even before loading */
+    aspect-ratio: 1 / 1; /* Forces square ratio */
     display: block;
-    object-fit: contain; /* Ensures the whole 1:1 video is visible */
-    background: #000; /* Prevents white flash while loading */
+    object-fit: cover;
     border-radius: 12px;
     border: 1px solid var(--border);
+    background-color: #f3f4f6; /* Shows gray box instead of white while loading */
     margin-top: 12px;
   }
 
   @media (min-width: 768px) {
-    .avatar img { width: 110px; height: 110px; } [cite: 26]
-    h1 { font-size: 1.9rem; } [cite: 27]
+    .avatar img { width: 110px; height: 110px; }
+    h1 { font-size: 1.9rem; }
   }
 </style>
 
 </head>
 
 <body>
-  <main class="container"> [cite: 6]
+  <main class="container">
 
-    <section class="top"> [cite: 10]
+    <section class="top">
       <div class="avatar">
-        <img src="images/profile.jpg" alt="Rashdan Hamzah" loading="lazy" width="88" height="88"> [cite: 22]
+        <img src="images/profile.jpg" alt="Rashdan Hamzah" width="88" height="88">
       </div>
-      
       <h1>Business performance & decision support</h1>
       <p class="sub">ACCA · SME-focused advisory</p>
-
-      <div class="proof-strip"> [cite: 11]
+      <div class="proof-strip">
         <span>ACCA (Sunway College MYS)</span>
         <span>OrderSaap system</span>
         <span>Project-based performance review</span>
-      </div> [cite: 28]
+      </div>
     </section>
 
     <section>
       <h2>Selected work</h2>
 
-      <div class="card"> [cite: 13]
+      <div class="card">
         <strong>OrderSaap — order automation on WhatsApp</strong>
         <p class="muted">SME ordering & operations</p>
 
         <div class="card item">
-          <button data-toggle>1. Diagnosis — scattered orders, reducing customer repeat</button>
-          <div class="item-content"> [cite: 16]
-            <p>
-              Orders arrived through WhatsApp, calls, and DMs. [cite: 29]
-              Owners handle all messaging, fulfilment, & order packing. [cite: 30]
-            </p>
+          <button data-toggle>1. Diagnosis — scattered orders</button>
+          <div class="item-content">
+            <p>Orders arrived through WhatsApp, calls, and DMs. [cite: 29]</p>
             <ul>
-              <li>Some orders are still pending</li>
-              <li>Missed sales from unreplied messages</li>
-              <li>Owners overworked unnecessarily</li>
+              <li>Some orders are still pending [cite: 30]</li>
+              <li>Owners overworked unnecessarily [cite: 30]</li>
             </ul>
-            <p class="muted">The issue was operational visibility and no automation.</p> [cite: 31]
           </div>
         </div>
 
         <div class="card item">
-          <button data-toggle>2. Process — structured the flow before building anything</button>
+          <button data-toggle>2. Process — structured the flow</button>
           <div class="item-content">
-            <p>Mapped the order flows before start coding.</p> [cite: 32]
-            <ul>
-              <li>Order intake → payment processing → fulfilment → delivery</li>
-              <li>Standardize each step</li>
-              <li>Designed automated WhatsApp order system</li>
-            </ul>
-            <img src="ordersaap-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;"> [cite: 33]
+            <p>Mapped the order flows before start coding. [cite: 32]</p>
+            <img src="ordersaap-flow.png" alt="Order flow" style="width:100%; border-radius:12px;">
           </div>
         </div>
 
         <div class="card item">
-          <button data-toggle>3. Outcome — owners could see and act, not guess</button>
+          <button data-toggle>3. Outcome — act, not guess</button>
           <div class="item-content">
             <ul>
-              <li>Centralized orders fulfilment</li> [cite: 34]
-              <li>Reduce lead time from 1 day to 2 minutes</li>
-              <li>Clear accountability per order</li>
+              <li>Centralized orders fulfilment [cite: 34]</li>
+              <li>Reduce lead time from 1 day to 2 minutes [cite: 34]</li>
             </ul>
 
-            <video autoplay muted loop playsinline class="responsive"> 
+            <video class="responsive" preload="auto" autoplay muted loop playsinline>
               <source src="images/clinic-demo.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
           </div>
         </div>
       </div>
-
-      <div class="card">
-        <strong>Performance review — struggling dental clinic </strong>
-        <p class="muted">Revenue & patient flow</p>
-
-        <div class="card item">
-          <button data-toggle>1. Diagnosis — revenue falling despite long-established</button>
-          <div class="item-content">
-            <p>
-              The clinic does not have customer softwares, only physical customer files. [cite: 36]
-              Do sampling on physical customer files as time was limited. [cite: 37]
-            </p>
-            <ul>
-              <li>take only sample ends with 1,4,6,8.</li>
-              <li>Prioritizing latest samples (2016 to 2025)</li>
-              <li>Max 300 samples (2.5% of total population)</li>
-            </ul>
-            <img src="images/sampling.png" alt="Sampling test" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy"> [cite: 38]
-          </div>
-        </div>
-
-        <div class="card item">
-          <button data-toggle>2. Process — translated raw numbers into insights</button>
-          <div class="item-content">
-            <ul>
-              <li>Missed revenue on higher contribution of repeat patients</li> [cite: 39]
-              <li>High concentration on older age group</li>
-              <li>High dependency on one-off services</li>
-            </ul>
-            <img src="images/clinic-dashboard.png" alt="Clinic dashboard" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy"> [cite: 39]
-          </div>
-        </div>
-
-        <div class="card item">
-          <button data-toggle>3. Outcome — clear operational levers identified</button>
-          <div class="item-content">
-            <ul>
-              <li>Identified retention as core issue</li> [cite: 40]
-              <li>Focused actions on recall & scheduling</li>
-              <li>Owner-level decisions supported by data</li>
-            </ul>
-            <img src="images/issues.png" alt="solutions" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy"> [cite: 40]
-            <p class="muted">Issues, risks & recommendations.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <h2>What I work on</h2>
-      <ul class="list">
-        <li>Business performance analysis</li>
-        <li>KPI dashboards & diagnostics</li>
-        <li>Decision support for owners</li>
-        <li>Short, focused problem engagements</li>
-      </ul>
-      <p class="muted">Not audit · Not tax · Not bookkeeping</p> [cite: 41]
-    </section>
-
-    <section>
-      <h2>How I engage</h2>
-      <p>
-        Short-term, project-based work. [cite: 42]
-        No long-term obligation unless there is clear fit.
-        Max 3 days/week. [cite: 43]
-      </p>
     </section>
 
     <section>
       <h2>Contact</h2>
-      <div class="actions"> [cite: 19]
-        <a class="action-card" href="mailto:rashdanhamzah04@gmail.com">
-          Email <span>Direct, async</span>
-        </a>
-        <a class="action-card" href="https://wa.me/60167069393">
-          WhatsApp <span>Fast response</span>
-        </a>
+      <div class="actions">
+        <a class="action-card" href="mailto:rashdanhamzah04@gmail.com">Email <span>Direct, async</span></a>
+        <a class="action-card" href="https://wa.me/60167069393">WhatsApp <span>Fast response</span></a>
       </div>
     </section>
   </main>
@@ -324,29 +189,29 @@
   <script>
     document.querySelectorAll('[data-toggle]').forEach(button => {
       button.addEventListener('click', () => {
-        const content = button.nextElementSibling; [cite: 44]
+        const content = button.nextElementSibling;
         const isOpen = content.style.display === 'block';
 
-        // Close others
+        // Close all others
         document.querySelectorAll('.item-content').forEach(c => {
           c.style.display = 'none';
         });
 
         // Toggle current
-        content.style.display = isOpen ? 'none' : 'block';
-
-        // Force Video to play on expand
-        if (!isOpen) {
+        if (isOpen) {
+          content.style.display = 'none';
+        } else {
+          content.style.display = 'block';
+          
+          // FORCED PLAY LOGIC
           const video = content.querySelector('video');
           if (video) {
-            video.currentTime = 0; // Restart from beginning
-            video.play().catch(error => {
-                console.log("Autoplay prevented, user interaction required.");
-            });
+            video.load(); // Force the browser to fetch the file
+            video.play().catch(e => console.log("Playback delayed:", e));
           }
         }
       });
     });
-  </script> [cite: 45]
+  </script>
 </body>
 </html>
