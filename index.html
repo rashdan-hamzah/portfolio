@@ -6,148 +6,147 @@
   <title>Business Performance & Advisory</title>
 
   <style>
-    :root {
-      --bg: #ffffff;
-      --text: #111111;
-      --muted: #666666;
-      --border: #e5e5e5;
-      --accent: #1f3a5f;
-    }
+  :root {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --text: #111111;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --accent: #1f3a5f;
+    --shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    --radius: 14px;
+  }
 
-    * {
-      box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.55;
-    }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+  }
 
-    .container {
-      max-width: 720px;
-      padding: 24px 18px 64px;
-      margin: 0 auto;
-    }
+  .container {
+    max-width: 720px;
+    padding: 22px 16px 64px;
+    margin: 0 auto;
+  }
 
-    h1, h2, h3 {
-      font-weight: 600;
-      margin: 0 0 12px;
-    }
+  h1 {
+    font-size: 1.65rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
 
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 36px 0 12px;
+  }
+
+  p {
+    margin: 0 0 12px;
+  }
+
+  .muted {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  /* Top */
+  .top {
+    margin-bottom: 28px;
+  }
+
+  .proof-strip {
+    margin-top: 14px;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .proof-strip span {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  /* Card base */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px 16px;
+    margin-bottom: 14px;
+  }
+
+  /* Expandable cards */
+  .item button {
+    background: none;
+    border: none;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .item-content {
+    display: none;
+    margin-top: 12px;
+    font-size: 0.95rem;
+  }
+
+  .item-content ul {
+    padding-left: 18px;
+    margin: 8px 0;
+  }
+
+  .item-content li {
+    margin-bottom: 6px;
+  }
+
+  .tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+
+  /* Action cards */
+  .actions {
+    display: grid;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .action-card {
+    display: block;
+    text-decoration: none;
+    color: var(--text);
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    box-shadow: var(--shadow);
+    font-weight: 500;
+  }
+
+  .action-card span {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  @media (min-width: 768px) {
     h1 {
-      font-size: 1.6rem;
+      font-size: 1.9rem;
     }
+  }
+</style>
 
-    h2 {
-      font-size: 1.1rem;
-      margin-top: 36px;
-    }
-
-    p {
-      margin: 0 0 12px;
-      color: var(--text);
-    }
-
-    .muted {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .divider {
-      border-top: 1px solid var(--border);
-      margin: 32px 0;
-    }
-
-    /* Top section */
-    .top {
-      margin-bottom: 28px;
-    }
-
-    .sub {
-      color: var(--muted);
-      margin-bottom: 16px;
-    }
-
-    .proof-strip {
-      font-size: 0.95rem;
-      color: var(--text);
-    }
-
-    .proof-strip span {
-      display: inline-block;
-      margin-right: 12px;
-    }
-
-    /* Expandable sections */
-    .item {
-      border-top: 1px solid var(--border);
-      padding: 16px 0;
-    }
-
-    .item button {
-      background: none;
-      border: none;
-      padding: 0;
-      margin: 0;
-      width: 100%;
-      text-align: left;
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text);
-      cursor: pointer;
-    }
-
-    .item button:focus {
-      outline: none;
-    }
-
-    .item-content {
-      display: none;
-      margin-top: 12px;
-      font-size: 0.95rem;
-    }
-
-    .item-content ul {
-      padding-left: 18px;
-      margin: 8px 0;
-    }
-
-    .item-content li {
-      margin-bottom: 6px;
-    }
-
-    .tag {
-      display: inline-block;
-      font-size: 0.8rem;
-      color: var(--accent);
-      margin-top: 6px;
-    }
-
-    /* What I do */
-    .list {
-      padding-left: 18px;
-      margin: 12px 0;
-    }
-
-    /* Contact */
-    .contact a {
-      display: block;
-      text-decoration: none;
-      color: var(--accent);
-      margin-bottom: 8px;
-      font-weight: 500;
-    }
-
-    /* Small screens tuning */
-    @media (min-width: 768px) {
-      h1 {
-        font-size: 1.9rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -168,59 +167,50 @@
 
     <!-- WORK -->
     <section>
-      <h2>Selected work</h2>
+  <h2>Selected work</h2>
 
-      <div class="item">
-        <button data-toggle>
-          OrderSaap — WhatsApp operations system
-        </button>
-        <div class="item-content">
-          <p>
-            WhatsApp-based order, operations, and tracking system for SMEs.
-          </p>
-          <ul>
-            <li>Centralised order intake via WhatsApp Cloud API</li>
-            <li>Operational tracking and visibility</li>
-            <li>Reduced fragmented communication</li>
-          </ul>
-          <span class="tag">Built & deployed</span>
-        </div>
-      </div>
+  <div class="card item">
+    <button data-toggle>
+      OrderSaap — WhatsApp operations system
+    </button>
+    <div class="item-content">
+      <p>WhatsApp-based order and operations system for SMEs.</p>
+      <ul>
+        <li>Centralised order intake via WhatsApp Cloud API</li>
+        <li>Operational tracking and visibility</li>
+        <li>Reduced fragmented communication</li>
+      </ul>
+      <span class="tag">Built & deployed</span>
+    </div>
+  </div>
 
-      <div class="item">
-        <button data-toggle>
-          Dental clinic — performance & diagnostic dashboard
-        </button>
-        <div class="item-content">
-          <p>
-            Diagnostic dashboard focused on revenue, patient flow, and utilisation.
-          </p>
-          <ul>
-            <li>Patient trend and repeat-visit analysis</li>
-            <li>Chair utilisation and revenue indicators</li>
-            <li>Used for owner-level decision making</li>
-          </ul>
-          <p class="muted">
-            Not audit. Not tax. Performance diagnosis.
-          </p>
-          <span class="tag">Decision support</span>
-        </div>
-      </div>
+  <div class="card item">
+    <button data-toggle>
+      Dental clinic — performance & diagnostic dashboard
+    </button>
+    <div class="item-content">
+      <p>Revenue, patient flow, and utilisation diagnostics.</p>
+      <ul>
+        <li>Repeat-visit trend analysis</li>
+        <li>Chair utilisation indicators</li>
+        <li>Owner-level decision support</li>
+      </ul>
+      <p class="muted">Not audit. Not tax. Performance diagnosis.</p>
+      <span class="tag">Decision support</span>
+    </div>
+  </div>
 
-      <div class="item">
-        <button data-toggle>
-          Triathlon — sprint category finisher
-        </button>
-        <div class="item-content">
-          <p>
-            Execution under fatigue. Consistent training. Finished what was started.
-          </p>
-          <span class="tag">Discipline & delivery</span>
-        </div>
-      </div>
-    </section>
+  <div class="card item">
+    <button data-toggle>
+      Triathlon — sprint finisher
+    </button>
+    <div class="item-content">
+      <p>Consistency, execution, and finishing under fatigue.</p>
+      <span class="tag">Discipline & delivery</span>
+    </div>
+  </div>
+</section>
 
-    <div class="divider"></div>
 
     <!-- WHAT I DO -->
     <section>
@@ -251,11 +241,22 @@
     <div class="divider"></div>
 
     <!-- CONTACT -->
-    <section class="contact">
-      <h2>Contact</h2>
-      <a href="mailto:yourname@email.com">yourname@email.com</a>
-      <a href="https://wa.me/601XXXXXXXX">WhatsApp</a>
-    </section>
+    <section>
+  <h2>Contact</h2>
+
+  <div class="actions">
+    <a class="action-card" href="mailto:yourname@email.com">
+      Email
+      <span>Direct, async</span>
+    </a>
+
+    <a class="action-card" href="https://wa.me/601XXXXXXXX">
+      WhatsApp
+      <span>Fast response</span>
+    </a>
+  </div>
+</section>
+
 
   </main>
 
