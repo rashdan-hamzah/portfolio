@@ -8,41 +8,41 @@
   <style>
   :root {
     --bg: #ffffff;
-    --card: #ffffff;
+    --card: #ffffff; [cite: 2]
     --text: #111111;
     --muted: #6b7280;
     --border: #e5e7eb;
     --accent: #1f3a5f;
     --shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     --radius: 14px;
-  }
+  } [cite: 3]
 
   * {
     box-sizing: border-box;
   }
 
   body {
-    margin: 0;
+    margin: 0; [cite: 4]
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.55;
-  }
+  } [cite: 5]
 
   .container {
-    max-width: 720px;
+    max-width: 720px; [cite: 6]
     padding: 22px 16px 64px;
     margin: 0 auto;
   }
 
   h1 {
-    font-size: 1.65rem;
+    font-size: 1.65rem; [cite: 7]
     font-weight: 600;
     margin-bottom: 8px;
   }
 
   h2 {
-    font-size: 1.1rem;
+    font-size: 1.1rem; [cite: 8]
     font-weight: 600;
     margin: 36px 0 12px;
   }
@@ -52,29 +52,29 @@
   }
 
   .muted {
-    color: var(--muted);
+    color: var(--muted); [cite: 9]
     font-size: 0.95rem;
   }
 
   /* Top */
   .top {
-    margin-bottom: 28px;
+    margin-bottom: 28px; [cite: 10]
   }
 
   .proof-strip {
-    margin-top: 14px;
+    margin-top: 14px; [cite: 11]
     font-size: 0.9rem;
     color: var(--muted);
   }
 
   .proof-strip span {
-    display: inline-block;
+    display: inline-block; [cite: 12]
     margin-right: 10px;
   }
 
   /* Card base */
   .card {
-    background: var(--card);
+    background: var(--card); [cite: 13]
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 16px 16px;
@@ -83,7 +83,7 @@
 
   /* Expandable cards */
   .item button {
-    background: none;
+    background: none; [cite: 14]
     border: none;
     padding: 0;
     width: 100%;
@@ -91,16 +91,16 @@
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
-  }
+  } [cite: 15]
 
   .item-content {
-    display: none;
+    display: none; [cite: 16]
     margin-top: 12px;
     font-size: 0.95rem;
   }
 
   .item-content ul {
-    padding-left: 18px;
+    padding-left: 18px; [cite: 17]
     margin: 8px 0;
   }
 
@@ -108,22 +108,15 @@
     margin-bottom: 6px;
   }
 
-  .tag {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 0.8rem;
-    color: var(--accent);
-  }
-
   /* Action cards */
   .actions {
-    display: grid;
+    display: grid; [cite: 19]
     gap: 12px;
     margin-top: 8px;
   }
 
   .action-card {
-    display: block;
+    display: block; [cite: 20]
     text-decoration: none;
     color: var(--text);
     background: var(--card);
@@ -134,127 +127,116 @@
   }
 
   .action-card span {
-    display: block;
+    display: block; [cite: 21]
     font-size: 0.85rem;
     color: var(--muted);
     margin-top: 4px;
   }
 
   .avatar {
-    display: flex;
+    display: flex; [cite: 22]
     justify-content: center;
     align-items: center;
     margin-bottom: 12px;
   }
-
+  
   .avatar img {
-    width: 88px;
+    width: 88px; [cite: 22]
     height: 88px;
     border-radius: 50%;
     object-fit: cover;
     box-shadow: 0 6px 16px rgba(31,58,95,0.10);
     border: 2px solid rgba(31,58,95,0.06);
-    display: block;
   }
 
+  /* Video Fix for 1:1 Ratio */
   video.responsive {
-    width: 100%;
+    width: 100%; 
     height: auto;
-    max-height: 360px;
+    aspect-ratio: 1 / 1; /* Forces square frame even before loading */
     display: block;
-    object-fit: cover;
+    object-fit: contain; /* Ensures the whole 1:1 video is visible */
+    background: #000; /* Prevents white flash while loading */
     border-radius: 12px;
     border: 1px solid var(--border);
+    margin-top: 12px;
   }
 
-  @media(min-width:720px){
-    video.responsive{ max-height:480px; }
-  }
-    
-  @media (min-width:768px){
-    .avatar img{ width: 110px; height: 110px; }
-    h1 { font-size: 1.9rem; }
+  @media (min-width: 768px) {
+    .avatar img { width: 110px; height: 110px; } [cite: 26]
+    h1 { font-size: 1.9rem; } [cite: 27]
   }
 </style>
 
 </head>
 
 <body>
-  <main class="container">
+  <main class="container"> [cite: 6]
 
-    <section class="top">
+    <section class="top"> [cite: 10]
       <div class="avatar">
-        <img src="images/profile.jpg" alt="Rashdan Hamzah" loading="lazy" width="88" height="88">
+        <img src="images/profile.jpg" alt="Rashdan Hamzah" loading="lazy" width="88" height="88"> [cite: 22]
       </div>
       
       <h1>Business performance & decision support</h1>
       <p class="sub">ACCA · SME-focused advisory</p>
 
-      <div class="proof-strip">
+      <div class="proof-strip"> [cite: 11]
         <span>ACCA (Sunway College MYS)</span>
         <span>OrderSaap system</span>
         <span>Project-based performance review</span>
-      </div>
+      </div> [cite: 28]
     </section>
 
     <section>
       <h2>Selected work</h2>
 
-      <div class="card">
+      <div class="card"> [cite: 13]
         <strong>OrderSaap — order automation on WhatsApp</strong>
         <p class="muted">SME ordering & operations</p>
 
         <div class="card item">
-          <button data-toggle>
-            1. Diagnosis — scattered orders, reducing customer repeat
-          </button>
-          <div class="item-content">
+          <button data-toggle>1. Diagnosis — scattered orders, reducing customer repeat</button>
+          <div class="item-content"> [cite: 16]
             <p>
-              Orders arrived through WhatsApp, calls, and DMs.
-              Owners handle all messaging, fulfilment, & order packing.
+              Orders arrived through WhatsApp, calls, and DMs. [cite: 29]
+              Owners handle all messaging, fulfilment, & order packing. [cite: 30]
             </p>
             <ul>
               <li>Some orders are still pending</li>
               <li>Missed sales from unreplied messages</li>
               <li>Owners overworked unnecessarily</li>
             </ul>
-            <p class="muted">
-              The issue was operational visibility and no automation.
-            </p>
+            <p class="muted">The issue was operational visibility and no automation.</p> [cite: 31]
           </div>
         </div>
 
         <div class="card item">
-          <button data-toggle>
-            2. Process — structured the flow before building anything
-          </button>
+          <button data-toggle>2. Process — structured the flow before building anything</button>
           <div class="item-content">
-            <p>Mapped the order flows before start coding.</p>
+            <p>Mapped the order flows before start coding.</p> [cite: 32]
             <ul>
               <li>Order intake → payment processing → fulfilment → delivery</li>
               <li>Standardize each step</li>
               <li>Designed automated WhatsApp order system</li>
             </ul>
-            <img src="ordersaap-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;">
+            <img src="ordersaap-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;"> [cite: 33]
           </div>
         </div>
 
         <div class="card item">
-          <button data-toggle>
-            3. Outcome — owners could see and act, not guess
-          </button>
+          <button data-toggle>3. Outcome — owners could see and act, not guess</button>
           <div class="item-content">
             <ul>
-              <li>Centralized orders fulfilment</li>
+              <li>Centralized orders fulfilment</li> [cite: 34]
               <li>Reduce lead time from 1 day to 2 minutes</li>
               <li>Clear accountability per order</li>
             </ul>
 
-            <video autoplay muted loop playsinline class="responsive">
+            <video autoplay muted loop playsinline class="responsive"> 
               <source src="images/clinic-demo.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-
           </div>
         </div>
       </div>
@@ -264,49 +246,42 @@
         <p class="muted">Revenue & patient flow</p>
 
         <div class="card item">
-          <button data-toggle>
-            1. Diagnosis — revenue falling despite long-established
-          </button>
+          <button data-toggle>1. Diagnosis — revenue falling despite long-established</button>
           <div class="item-content">
             <p>
-              The clinic does not have customer softwares, only physical customer files.
-              Do sampling on physical customer files as time was limited.
+              The clinic does not have customer softwares, only physical customer files. [cite: 36]
+              Do sampling on physical customer files as time was limited. [cite: 37]
             </p>
             <ul>
               <li>take only sample ends with 1,4,6,8.</li>
               <li>Prioritizing latest samples (2016 to 2025)</li>
               <li>Max 300 samples (2.5% of total population)</li>
             </ul>
-            <img src="images/sampling.png" alt="Sampling test" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+            <img src="images/sampling.png" alt="Sampling test" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy"> [cite: 38]
           </div>
         </div>
 
         <div class="card item">
-          <button data-toggle>
-            2. Process — translated raw numbers into insights
-          </button>
+          <button data-toggle>2. Process — translated raw numbers into insights</button>
           <div class="item-content">
             <ul>
-              <li>Missed revenue on higher contribution of repeat patients</li>
+              <li>Missed revenue on higher contribution of repeat patients</li> [cite: 39]
               <li>High concentration on older age group</li>
               <li>High dependency on one-off services</li>
             </ul>
-
-            <img src="images/clinic-dashboard.png" alt="Clinic dashboard" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+            <img src="images/clinic-dashboard.png" alt="Clinic dashboard" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy"> [cite: 39]
           </div>
         </div>
 
         <div class="card item">
-          <button data-toggle>
-            3. Outcome — clear operational levers identified
-          </button>
+          <button data-toggle>3. Outcome — clear operational levers identified</button>
           <div class="item-content">
             <ul>
-              <li>Identified retention as core issue</li>
+              <li>Identified retention as core issue</li> [cite: 40]
               <li>Focused actions on recall & scheduling</li>
               <li>Owner-level decisions supported by data</li>
             </ul>
-            <img src="images/issues.png" alt="solutions" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+            <img src="images/issues.png" alt="solutions" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy"> [cite: 40]
             <p class="muted">Issues, risks & recommendations.</p>
           </div>
         </div>
@@ -321,63 +296,57 @@
         <li>Decision support for owners</li>
         <li>Short, focused problem engagements</li>
       </ul>
-      <p class="muted">
-        Not audit · Not tax · Not bookkeeping
-      </p>
+      <p class="muted">Not audit · Not tax · Not bookkeeping</p> [cite: 41]
     </section>
-
-    <div class="divider"></div>
 
     <section>
       <h2>How I engage</h2>
       <p>
-        Short-term, project-based work.
+        Short-term, project-based work. [cite: 42]
         No long-term obligation unless there is clear fit.
-        Max 3 days/week.
+        Max 3 days/week. [cite: 43]
       </p>
     </section>
 
-    <div class="divider"></div>
-
     <section>
       <h2>Contact</h2>
-      <div class="actions">
+      <div class="actions"> [cite: 19]
         <a class="action-card" href="mailto:rashdanhamzah04@gmail.com">
-          Email
-          <span>Direct, async</span>
+          Email <span>Direct, async</span>
         </a>
         <a class="action-card" href="https://wa.me/60167069393">
-          WhatsApp
-          <span>Fast response</span>
+          WhatsApp <span>Fast response</span>
         </a>
       </div>
     </section>
-
   </main>
 
   <script>
     document.querySelectorAll('[data-toggle]').forEach(button => {
       button.addEventListener('click', () => {
-        const content = button.nextElementSibling;
+        const content = button.nextElementSibling; [cite: 44]
         const isOpen = content.style.display === 'block';
 
-        // Close all other accordions
+        // Close others
         document.querySelectorAll('.item-content').forEach(c => {
           c.style.display = 'none';
         });
 
-        // Toggle current accordion
+        // Toggle current
         content.style.display = isOpen ? 'none' : 'block';
 
-        // Trigger video play if it exists in the newly opened section
+        // Force Video to play on expand
         if (!isOpen) {
           const video = content.querySelector('video');
           if (video) {
-            video.play();
+            video.currentTime = 0; // Restart from beginning
+            video.play().catch(error => {
+                console.log("Autoplay prevented, user interaction required.");
+            });
           }
         }
       });
     });
-  </script>
+  </script> [cite: 45]
 </body>
 </html>
