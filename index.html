@@ -1,356 +1,311 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Business Performance & Advisory</title>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rashdan — Business performance & advisory</title>
+  <meta name="description" content="ACCA (71% avg, straight passer). SME-focused business performance analysis, KPI dashboards and decision support. Short, outcome-driven engagements. Email & WhatsApp contact." />
   <style>
-  :root {
-    --bg: #ffffff;
-    --card: #ffffff;
-    --text: #111111;
-    --muted: #6b7280;
-    --border: #e5e7eb;
-    --accent: #1f3a5f;
-    --shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-    --radius: 14px;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.55;
-  }
-
-  .container {
-    max-width: 720px;
-    padding: 22px 16px 64px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    font-size: 1.65rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
-
-  h2 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 36px 0 12px;
-  }
-
-  p {
-    margin: 0 0 12px;
-  }
-
-  .muted {
-    color: var(--muted);
-    font-size: 0.95rem;
-  }
-
-  /* Top */
-  .top {
-    margin-bottom: 28px;
-  }
-
-  .proof-strip {
-    margin-top: 14px;
-    font-size: 0.9rem;
-    color: var(--muted);
-  }
-
-  .proof-strip span {
-    display: inline-block;
-    margin-right: 10px;
-  }
-
-  /* Card base */
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 16px 16px;
-    margin-bottom: 14px;
-  }
-
-  /* Expandable cards */
-  .item button {
-    background: none;
-    border: none;
-    padding: 0;
-    width: 100%;
-    text-align: left;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  .item-content {
-    display: none;
-    margin-top: 12px;
-    font-size: 0.95rem;
-  }
-
-  .item-content ul {
-    padding-left: 18px;
-    margin: 8px 0;
-  }
-
-  .item-content li {
-    margin-bottom: 6px;
-  }
-
-  .tag {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 0.8rem;
-    color: var(--accent);
-  }
-
-  /* Action cards */
-  .actions {
-    display: grid;
-    gap: 12px;
-    margin-top: 8px;
-  }
-
-  .action-card {
-    display: block;
-    text-decoration: none;
-    color: var(--text);
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    box-shadow: var(--shadow);
-    font-weight: 500;
-  }
-
-  .action-card span {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  @media (min-width: 768px) {
-    h1 {
-      font-size: 1.9rem;
+    :root{
+      --bg:#ffffff;
+      --card:#ffffff;
+      --text:#0b1220;
+      --muted:#6b7280;
+      --border:#e7e9ee;
+      --accent:#1f3a5f;
+      --radius:12px;
+      --gap:14px;
     }
-  }
-</style>
 
+    /* Reset / base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    /* Layout */
+    .container{
+      max-width:720px;
+      padding:20px 18px 64px;
+      margin:0 auto;
+    }
+
+    header{padding-top:6px;padding-bottom:6px}
+    h1{
+      font-size:1.6rem;
+      margin:0 0 6px;
+      font-weight:600;
+      letter-spacing:-0.01em;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    .proof{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+      color:var(--muted);
+      font-size:0.9rem;
+    }
+    .proof span{
+      padding:6px 8px;
+      border-radius:999px;
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-weight:500;
+    }
+
+    /* Card */
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      border:1px solid var(--border);
+      padding:14px;
+      margin-top:var(--gap);
+    }
+
+    /* Selected work list */
+    h2{font-size:1.05rem;margin:26px 0 10px;font-weight:600}
+    .work-title{display:block;font-weight:600;margin-bottom:4px}
+    .muted{color:var(--muted);font-size:0.95rem}
+
+    details{
+      margin-top:10px;
+      border-radius:10px;
+      padding:10px;
+      background:linear-gradient(180deg, rgba(0,0,0,0.01), transparent);
+      border:1px solid rgba(0,0,0,0.03);
+    }
+    summary{
+      cursor:pointer;
+      list-style:none;
+      font-weight:600;
+      font-size:1rem;
+      outline:none;
+    }
+    summary::-webkit-details-marker{display:none}
+
+    details > div{
+      margin-top:10px;
+      color:var(--text);
+      font-size:0.96rem;
+    }
+
+    img.responsive{
+      width:100%;
+      height:auto;
+      border-radius:10px;
+      display:block;
+      margin-top:12px;
+      border:1px solid var(--border);
+    }
+
+    ul.list{padding-left:18px;margin:10px 0}
+    ul.list li{margin-bottom:8px}
+
+    .actions{
+      display:grid;
+      gap:10px;
+      margin-top:8px;
+    }
+    .action-card{
+      display:inline-flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      border-radius:12px;
+      background:var(--card);
+      border:1px solid var(--border);
+      text-decoration:none;
+      color:var(--text);
+      font-weight:600;
+      font-size:0.98rem;
+    }
+    .action-card small{display:block;color:var(--muted);font-weight:500;font-size:0.86rem;margin-top:2px}
+
+    footer{margin-top:28px;color:var(--muted);font-size:0.85rem}
+
+    /* Responsive tweaks */
+    @media (min-width:720px){
+      .container{padding-left:28px;padding-right:28px}
+      h1{font-size:1.9rem}
+    }
+  </style>
 </head>
-
 <body>
-  <main class="container">
+  <main class="container" id="top">
 
-    <!-- TOP -->
-    <section class="top">
-      <h1>Business performance & decision support</h1>
-      <p class="sub">ACCA (71% avg, straight passer) · SME-focused advisory</p>
+    <header>
+      <h1>Business performance & advisory</h1>
+      <p class="sub">ACCA — 71% average (straight passer). APM &amp; AFM optional papers. SME-focused diagnostics & decision support.</p>
 
-      <div class="proof-strip">
-        <span>ACCA (APM, AFM)</span>
-        <span>Triathlon finisher</span>
-        <span>OrderSaap system</span>
-        <span>Dental clinic dashboard</span>
+      <div class="proof" aria-hidden="false">
+        <span title="Discipline & execution">Triathlon finisher</span>
+        <span title="Real operational system">OrderSaap — WhatsApp ops</span>
+        <span title="Data-driven dashboard">Dental clinic dashboard</span>
+      </div>
+    </header>
+
+    <section aria-labelledby="work">
+      <h2 id="work">Selected work</h2>
+
+      <div class="card" aria-label="OrderSaap — WhatsApp operations system">
+        <span class="work-title">OrderSaap — WhatsApp operations system</span>
+        <p class="muted">SME ordering & operations — real system used by operators</p>
+
+        <details>
+          <summary>1. Diagnosis — orders were coming in, but no one had clarity</summary>
+          <div>
+            <p>Orders arrived through WhatsApp, calls, and DMs. Owners lacked operational visibility:</p>
+            <ul class="list">
+              <li>What orders are pending?</li>
+              <li>Which orders are delayed?</li>
+              <li>Who is responsible?</li>
+            </ul>
+            <p class="muted">The problem was not demand; it was lack of operational clarity.</p>
+          </div>
+        </details>
+
+        <details>
+          <summary>2. Process — structured the flow before building</summary>
+          <div>
+            <p>Mapped the order lifecycle end-to-end and defined ownership at each step.</p>
+            <ul class="list">
+              <li>Order intake → validation → fulfilment → completion</li>
+              <li>Decision-driven WhatsApp interactions</li>
+            </ul>
+            <img src="images/ordersaap-flow.png" alt="Order flow diagram for OrderSaap" class="responsive" loading="lazy">
+          </div>
+        </details>
+
+        <details>
+          <summary>3. Outcome — owners could see and act, not guess</summary>
+          <div>
+            <ul class="list">
+              <li>Single source of truth for all orders</li>
+              <li>Faster response times</li>
+              <li>Clear accountability per order</li>
+            </ul>
+            <img src="images/ordersaap-ui.png" alt="OrderSaap UI screenshot" class="responsive" loading="lazy">
+          </div>
+        </details>
+      </div>
+
+      <div class="card" aria-label="Dental clinic — performance diagnostic dashboard">
+        <span class="work-title">Dental clinic — performance diagnostic dashboard</span>
+        <p class="muted">Revenue, patient flow, and operational levers</p>
+
+        <details>
+          <summary>1. Diagnosis — revenue falling despite stable capacity</summary>
+          <div>
+            <p>Data showed demand stable but retention and utilisation were the issues:</p>
+            <ul class="list">
+              <li>New patients stable</li>
+              <li>Repeat visits declining</li>
+              <li>Chair utilisation uneven</li>
+            </ul>
+          </div>
+        </details>
+
+        <details>
+          <summary>2. Process — translated raw data into owner questions</summary>
+          <div>
+            <ul class="list">
+              <li>Patient cohort analysis</li>
+              <li>Visit frequency tracking</li>
+              <li>Revenue per chair per day</li>
+            </ul>
+            <img src="images/clinic-dashboard.png" alt="Clinic dashboard screenshot" class="responsive" loading="lazy">
+          </div>
+        </details>
+
+        <details>
+          <summary>3. Outcome — clear operational levers identified</summary>
+          <div>
+            <ul class="list">
+              <li>Retention identified as the core issue</li>
+              <li>Actions focused on recall & scheduling</li>
+              <li>Owner-level decisions supported by data</li>
+            </ul>
+            <p class="muted">Not audit. Not tax. Practical diagnosis and levers.</p>
+          </div>
+        </details>
       </div>
     </section>
 
-    <!-- WORK -->
-    <section>
-  <h2>Selected work</h2>
-
-  <div class="card">
-    <strong>OrderSaap — WhatsApp operations system</strong>
-    <p class="muted">SME ordering & operations</p>
-
-    <!-- Diagnosis -->
-    <div class="card item">
-      <button data-toggle>
-        1. Diagnosis — orders were coming in, but no one had clarity
-      </button>
-      <div class="item-content">
-        <p>
-          Orders arrived through WhatsApp, calls, and DMs.
-          Owners could not answer basic questions:
-        </p>
-        <ul>
-          <li>What orders are pending?</li>
-          <li>Which orders are delayed?</li>
-          <li>Who is responsible?</li>
-        </ul>
-        <p class="muted">
-          The issue was not demand. It was operational visibility.
-        </p>
-      </div>
-    </div>
-
-    <!-- Process -->
-    <div class="card item">
-      <button data-toggle>
-        2. Process — structured the flow before building anything
-      </button>
-      <div class="item-content">
-        <p>
-          Mapped the order lifecycle end-to-end before writing code.
-        </p>
-        <ul>
-          <li>Order intake → validation → fulfilment → completion</li>
-          <li>Defined ownership at each step</li>
-          <li>Designed WhatsApp interactions around decisions</li>
-        </ul>
-
-        <!-- Optional image -->
-        <img src="ordersaap-flow.png" alt="Order flow"
-             style="width:100%; margin-top:12px; border-radius:12px;">
-      </div>
-    </div>
-
-    <!-- Outcome -->
-    <div class="card item">
-      <button data-toggle>
-        3. Outcome — owners could see and act, not guess
-      </button>
-      <div class="item-content">
-        <ul>
-          <li>Single source of truth for all orders</li>
-          <li>Faster response time</li>
-          <li>Clear accountability per order</li>
-        </ul>
-
-        <img src="ordersaap-ui.png" alt="OrderSaap UI"
-             style="width:100%; margin-top:12px; border-radius:12px;">
-      </div>
-    </div>
-  </div>
-
-<div class="card">
-  <strong>Dental clinic — performance diagnostic dashboard</strong>
-  <p class="muted">Revenue & patient flow</p>
-
-  <div class="card item">
-    <button data-toggle>
-      1. Diagnosis — revenue falling despite stable capacity
-    </button>
-    <div class="item-content">
-      <p>
-        The clinic believed demand was weak.
-        Data showed something else:
-      </p>
-      <ul>
-        <li>New patients stable</li>
-        <li>Repeat visits declining</li>
-        <li>Chair utilisation uneven</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="card item">
-    <button data-toggle>
-      2. Process — translated raw data into owner questions
-    </button>
-    <div class="item-content">
-      <ul>
-        <li>Patient cohort analysis</li>
-        <li>Visit frequency tracking</li>
-        <li>Revenue per chair per day</li>
-      </ul>
-
-      <img src="https://imgur.com/xX6vhWh" alt="Clinic dashboard"
-           style="width:100%; margin-top:12px; border-radius:12px;">
-    </div>
-  </div>
-
-  <div class="card item">
-    <button data-toggle>
-      3. Outcome — clear operational levers identified
-    </button>
-    <div class="item-content">
-      <ul>
-        <li>Identified retention as core issue</li>
-        <li>Focused actions on recall & scheduling</li>
-        <li>Owner-level decisions supported by data</li>
-      </ul>
-      <p class="muted">Not audit. Not tax. Diagnosis.</p>
-    </div>
-  </div>
-</div>
-
-      
-</section>
-
-
-
-    <!-- WHAT I DO -->
-    <section>
-      <h2>What I work on</h2>
+    <section aria-labelledby="services">
+      <h2 id="services">What I work on</h2>
       <ul class="list">
-        <li>Business performance analysis</li>
-        <li>KPI dashboards & diagnostics</li>
-        <li>Decision support for owners</li>
-        <li>Short, focused problem engagements</li>
+        <li>Business performance analysis and diagnostics</li>
+        <li>KPI dashboards and concise diagnostics</li>
+        <li>Decision support for owners and partners</li>
+        <li>Short, focused problem engagements (project-based)</li>
       </ul>
-      <p class="muted">
-        Not audit · Not tax · Not bookkeeping
-      </p>
+      <p class="muted">Not audit · Not tax · Not bookkeeping</p>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- ENGAGEMENT -->
-    <section>
-      <h2>How I engage</h2>
+    <section aria-labelledby="engage">
+      <h2 id="engage">How I engage</h2>
       <p>
-        Short-term, project-based work.
-        Comparable to an intern in commitment, but outcome-driven.
-        No long-term obligation unless there is clear fit.
+        Short-term, outcome-driven work. Comparable to an intern in time commitment, but outcome-focused and accountable. No long-term obligation unless there is clear fit.
       </p>
+      <p class="muted">Ideal for SME owners, corporate advisory boutiques, consulting teams, or accounting firms needing performance reviews and actionable dashboards.</p>
     </section>
 
-    <div class="divider"></div>
+    <section aria-labelledby="contact">
+      <h2 id="contact">Contact</h2>
 
-    <!-- CONTACT -->
-    <section>
-  <h2>Contact</h2>
+      <div class="actions" role="list">
+        <!-- Replace placeholders with your email and full international WhatsApp number (no spaces, e.g. 60123456789) -->
+        <a class="action-card" href="mailto:your.email@example.com" role="listitem" rel="noopener">
+          Email
+          <small>Direct, async — replace with your email</small>
+        </a>
 
-  <div class="actions">
-    <a class="action-card" href="mailto:yourname@email.com">
-      Email
-      <span>Direct, async</span>
-    </a>
+        <a class="action-card" href="https://wa.me/601XXXXXXXX" role="listitem" target="_blank" rel="noopener">
+          WhatsApp
+          <small>Fast response — replace with your WhatsApp number</small>
+        </a>
+      </div>
+    </section>
 
-    <a class="action-card" href="https://wa.me/601XXXXXXXX">
-      WhatsApp
-      <span>Fast response</span>
-    </a>
-  </div>
-</section>
-
-
+    <footer>
+      <div>Graduating ACCA in ~2 months. Available for short-term advisory & diagnostic work — flexible, outcome-driven.</div>
+      <div style="margin-top:8px;color:var(--muted)">Last updated: 2026-01-21</div>
+    </footer>
   </main>
 
   <script>
-    document.querySelectorAll('[data-toggle]').forEach(button => {
-      button.addEventListener('click', () => {
-        const content = button.nextElementSibling;
-        const isOpen = content.style.display === 'block';
-
-        document.querySelectorAll('.item-content').forEach(c => {
-          c.style.display = 'none';
-        });
-
-        content.style.display = isOpen ? 'none' : 'block';
+    // Keep interaction minimal: ensure only one <details> is open at a time
+    document.addEventListener('click', (e) => {
+      const d = e.target.closest('details');
+      if (!d) return;
+      // When opening a details, close other details within same container
+      if (d.open) {
+        // already open and clicked; let it toggle naturally
+        return;
+      }
+      const container = d.closest('section') || document;
+      container.querySelectorAll('details').forEach(det => {
+        if (det !== d) det.open = false;
       });
+      d.open = true;
     });
+
+    // Accessibility: allow keyboard toggle behaviour is native for <details>
   </script>
 </body>
 </html>
