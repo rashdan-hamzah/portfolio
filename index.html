@@ -189,7 +189,7 @@
   flex: 1;
   background: #fff;
   border-radius: 14px;
-  padding: 18px;
+  padding: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -203,11 +203,15 @@
 }
 
 .contact-icons img {
-  width: 30px;
-  height: 30px;
+  width: 46px;
+  height: 46px;
+  /* Optionally: add some margin if needed */
 }
 
-
+.contact-icons a:hover {
+  box-shadow: 0 8px 24px rgba(31,58,95,0.15);
+  transform: translateY(-2px) scale(1.06);
+}
 
 /* Slightly larger on tablet / desktop */
 @media (min-width: 768px) {
