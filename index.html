@@ -167,18 +167,17 @@
 
     .edu-logos {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 16px;
-  margin-top: 16px;
+  gap: 20px;
+  margin: 16px 0 28px;
 }
 
 .edu-logos img {
-  max-width: 140px;   /* controls size on mobile */
-  width: 100%;
-  height: auto;
+  max-height: 76px;   /* key control */
+  width: auto;
   object-fit: contain;
 }
+
 
     .contact-icons {
   display: flex;
@@ -204,9 +203,10 @@
 }
 
 .contact-icons img {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
 }
+
 
 
 /* Slightly larger on tablet / desktop */
@@ -219,6 +219,11 @@
     .edu-logos img:first-child {
   max-width: 120px;
 }
+
+    .edu-logos img:last-child {
+  max-height: 64px;
+}
+
 
 @media(min-width:720px){
   video.responsive{ max-height:480px; }
@@ -441,11 +446,11 @@
 
   <div class="contact-icons">
     <a href="mailto:rashdanhamzah04@gmail.com" aria-label="Email">
-      <img src="images/icon-email.svg" alt="Email">
+      <img src="images/icon-email.jpg" alt="Email">
     </a>
 
     <a href="https://wa.me/60167069393" aria-label="WhatsApp">
-      <img src="images/icon-whatsapp.svg" alt="WhatsApp">
+      <img src="images/icon-whatsapp.jpg" alt="WhatsApp">
     </a>
   </div>
 </section>
