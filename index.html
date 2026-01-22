@@ -180,6 +180,35 @@
   object-fit: contain;
 }
 
+    .contact-icons {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.contact-icons a {
+  flex: 1;
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.contact-icons a:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.contact-icons img {
+  width: 28px;
+  height: 28px;
+}
+
+
 /* Slightly larger on tablet / desktop */
 @media (min-width: 768px) {
   .edu-logos img {
@@ -277,7 +306,7 @@
     <!-- Outcome -->
     <div class="card item">
       <button data-toggle>
-        3. Outcome — owners could see and act, not guess
+        3. Outcome — faster processing & customer to sales
       </button>
       <div class="item-content">
         <ul>
@@ -395,11 +424,13 @@
     <!-- ENGAGEMENT -->
     <section>
       <h2>How I engage</h2>
-      <p>
-        Short-term, project-based work.
-        No long-term obligation unless there is clear fit.
-        Max 3 days/week.
-      </p>
+      
+      <ul class="list">
+        <li>Short-term, project-based work.</li>
+        <li>No long-term obligation unless there is clear fit.</li>
+        <li>Max 3 days/week.</li>
+      </ul>
+      
     </section>
 
     <div class="divider"></div>
@@ -408,18 +439,17 @@
     <section>
   <h2>Contact</h2>
 
-  <div class="actions">
-    <a class="action-card" href="mailto:rashdanhamzah04@gmail.com">
-      Email
-      <span>Direct, async</span>
+  <div class="contact-icons">
+    <a href="mailto:rashdanhamzah04@gmail.com" aria-label="Email">
+      <img src="images/icon-email.svg" alt="Email">
     </a>
 
-    <a class="action-card" href="https://wa.me/60167069393">
-      WhatsApp
-      <span>Fast response</span>
+    <a href="https://wa.me/60167069393" aria-label="WhatsApp">
+      <img src="images/icon-whatsapp.svg" alt="WhatsApp">
     </a>
   </div>
 </section>
+
 
 
   </main>
