@@ -115,23 +115,28 @@
     color: var(--accent);
   }
 
-  /* Action cards */
   .actions {
-    display: grid;
-    gap: 12px;
-    margin-top: 8px;
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
 
-  .action-card {
-    display: block;
-    text-decoration: none;
-    color: var(--text);
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    box-shadow: var(--shadow);
-    font-weight: 500;
-  }
+.action-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  border-radius: 14px;
+  background: #f7f7f7;
+}
+
+.action-card img {
+  width: 28px;        /* hard limit */
+  height: 28px;
+  object-fit: contain;
+  display: block;
+}
+
 
   .action-card span {
     display: block;
@@ -441,19 +446,20 @@
     <div class="divider"></div>
 
     <!-- CONTACT -->
-   <section>
+   <section class="contact">
   <h2>Contact</h2>
 
-  <div class="contact-icons">
-    <a href="mailto:rashdanhamzah04@gmail.com" aria-label="Email">
-      <img src="images/icon-email.png" alt="Email">
+  <div class="actions">
+    <a class="action-card" href="mailto:rashdanhamzah04@gmail.com">
+      <img src="images/email.png" alt="Email">
     </a>
 
-    <a href="https://wa.me/60167069393" aria-label="WhatsApp">
-      <img src="images/icon-whatsapp.png" alt="WhatsApp">
+    <a class="action-card" href="https://wa.me/60167069393">
+      <img src="images/whatsapp.png" alt="WhatsApp">
     </a>
   </div>
 </section>
+
 
 
 
