@@ -15,6 +15,10 @@
     --accent: #1f3a5f;
     --shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     --radius: 14px;
+
+    /* Animation tuning */
+    --expand-ms: 520ms;
+    --expand-ease: cubic-bezier(.22, 1, .36, 1);
   }
 
   * { box-sizing: border-box; }
@@ -73,6 +77,7 @@
     margin-bottom: 14px;
   }
 
+  /* Expandable cards (accordion) */
   .item button {
     background: none;
     border: none;
@@ -84,10 +89,33 @@
     cursor: pointer;
   }
 
+  /*
+    Animated panel:
+    We keep the node in the DOM and animate max-height + opacity + translate.
+    JS sets --panel-h to the content's scrollHeight when opening.
+  */
   .item-content {
-    display: none;
-    margin-top: 12px;
+    display: block;                 /* changed from none */
+    max-height: 0;                  /* collapsed */
+    overflow: clip;                 /* modern; safe fallback is hidden */
+    opacity: 0;
+    transform: translateY(-6px);
+    margin-top: 0;                  /* avoid margin when collapsed */
     font-size: 0.95rem;
+
+    transition:
+      max-height var(--expand-ms) var(--expand-ease),
+      opacity calc(var(--expand-ms) - 120ms) ease,
+      transform calc(var(--expand-ms) - 120ms) var(--expand-ease),
+      margin-top var(--expand-ms) var(--expand-ease);
+    will-change: max-height, opacity, transform;
+  }
+
+  .item.is-open .item-content {
+    max-height: var(--panel-h, 800px);
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 12px;
   }
 
   .item-content ul {
@@ -218,13 +246,19 @@
   @media (min-width: 768px) {
     h1 { font-size: 1.9rem; }
   }
-</style>
 
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .item-content {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+</style>
 </head>
 
 <body>
   <main class="container">
-
     <!-- TOP -->
     <section class="top">
       <div class="avatar">
@@ -232,7 +266,6 @@
       </div>
 
       <h1>Selected Work — Open to Collaboration</h1>
-
       <div class="proof-strip"></div>
     </section>
 
@@ -388,7 +421,6 @@
     <!-- ENGAGEMENT -->
     <section>
       <h2>How I engage</h2>
-
       <ul class="list">
         <li>Short-term, project-based work.</li>
         <li>No long-term obligation unless there is clear fit.</li>
@@ -415,64 +447,85 @@
   </main>
 
   <script>
-    // Existing accordion behavior
-    document.querySelectorAll('[data-toggle]').forEach(button => {
+    // Helpers for smooth accordion animation
+    function setPanelHeight(item) {
+      const panel = item.querySelector('.item-content');
+      if (!panel) return;
+
+      // If images load later, height changes; this still works because we recompute on open and on load events below.
+      const h = panel.scrollHeight;
+      item.style.setProperty('--panel-h', h + 'px');
+    }
+
+    function openItem(item) {
+      if (!item) return;
+      setPanelHeight(item);
+      item.classList.add('is-open');
+    }
+
+    function closeItem(item) {
+      if (!item) return;
+      item.classList.remove('is-open');
+    }
+
+    // Accordion behavior (animated)
+    document.querySelectorAll('.item [data-toggle]').forEach(button => {
       button.addEventListener('click', () => {
-        const content = button.nextElementSibling;
-        const isOpen = content.style.display === 'block';
+        const item = button.closest('.item');
+        const isOpen = item.classList.contains('is-open');
 
-        document.querySelectorAll('.item-content').forEach(c => {
-          c.style.display = 'none';
-        });
+        // close all
+        document.querySelectorAll('.item.is-open').forEach(open => closeItem(open));
 
-        content.style.display = isOpen ? 'none' : 'block';
+        // toggle this
+        if (!isOpen) openItem(item);
       });
     });
 
-    // NEW: auto-scroll nudge to reveal the video card when user reaches it
-    (function autoRevealVideoCard() {
+    // Keep heights correct if viewport changes
+    window.addEventListener('resize', () => {
+      document.querySelectorAll('.item.is-open').forEach(item => setPanelHeight(item));
+    });
+
+    // If images inside panels load after open, update height
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.item.is-open').forEach(item => setPanelHeight(item));
+    });
+
+    // Auto-extend + auto-scroll to video card (EVERY refresh/load, once user has started scrolling)
+    (function autoRevealVideoCardEveryLoad() {
       const videoCard = document.getElementById('video-card');
       if (!videoCard) return;
 
-      // Respect reduced-motion
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Only do once per tab/session so it doesn't feel annoying
-      const KEY = 'autoRevealVideoCardDone';
-      if (sessionStorage.getItem(KEY) === '1') return;
-
-      // Don't trigger until user actually starts scrolling (avoid "jump" on load)
+      // Avoid jumping immediately on load; only after they start scrolling
       let userHasScrolled = false;
-      const onFirstScroll = () => {
-        userHasScrolled = true;
-        window.removeEventListener('scroll', onFirstScroll, { passive: true });
-      };
-      window.addEventListener('scroll', onFirstScroll, { passive: true, once: true });
+      window.addEventListener('scroll', () => { userHasScrolled = true; }, { passive: true, once: true });
+
+      let didAutoReveal = false;
 
       const obs = new IntersectionObserver((entries) => {
         const entry = entries[0];
         if (!entry) return;
 
-        // Trigger when the card is partially visible
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
-          if (!userHasScrolled) return;
+        if (!userHasScrolled) return;
 
-          // Mark done first to avoid loops if scrolling causes re-observe
-          sessionStorage.setItem(KEY, '1');
+        // Trigger when the video card is approaching the viewport
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.25 && !didAutoReveal) {
+          didAutoReveal = true;
           obs.disconnect();
 
-          // Open the accordion item so the video actually exists in layout
-          const btn = videoCard.querySelector('button[data-toggle]');
-          const content = btn?.nextElementSibling;
-          if (content) {
-            // close others, open this
-            document.querySelectorAll('.item-content').forEach(c => (c.style.display = 'none'));
-            content.style.display = 'block';
-          }
+          // Open the video card with animation
+          // (Also closes others for a clean "focus" effect.)
+          document.querySelectorAll('.item.is-open').forEach(open => closeItem(open));
+          openItem(videoCard);
 
-          // Scroll so the video area is comfortably in view
-          // Use requestAnimationFrame so layout updates (content becomes visible) are applied first.
+          // After it's opened (height known), smoothly center it
           requestAnimationFrame(() => {
+            // Recompute height once more after opening so scroll position is accurate
+            setPanelHeight(videoCard);
+
             videoCard.scrollIntoView({
               behavior: reduceMotion ? 'auto' : 'smooth',
               block: 'center'
