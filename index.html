@@ -68,7 +68,15 @@
     margin-bottom: 14px;
   }
 
-  /* Expandable cards (accordion) */
+  /* ==========
+     Accordion
+     ========== */
+
+  /* Make each item look tappable like an Apple list row */
+  .item {
+    padding: 14px 14px;
+  }
+
   .item button {
     background: none;
     border: none;
@@ -78,6 +86,40 @@
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
+    color: inherit;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .item button:focus-visible {
+    outline: 2px solid rgba(31, 58, 95, 0.35);
+    outline-offset: 6px;
+    border-radius: 10px;
+  }
+
+  /* Right chevron */
+  .chev {
+    flex: 0 0 auto;
+    width: 26px;
+    height: 26px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    color: rgba(17, 17, 17, 0.55);
+    transition: transform 260ms ease, background 260ms ease, color 260ms ease;
+  }
+
+  .item:hover .chev {
+    background: rgba(17, 17, 17, 0.04);
+  }
+
+  .item.is-open .chev {
+    transform: rotate(180deg);
+    color: rgba(31, 58, 95, 0.85);
+    background: rgba(31, 58, 95, 0.06);
   }
 
   /* Animated panel (replaces display:none) */
@@ -112,37 +154,88 @@
 
   .item-content li { margin-bottom: 6px; }
 
-  .tag {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 0.8rem;
-    color: var(--accent);
+  video.responsive{
+    width:100%;
+    height:auto;
+    max-height:360px;
+    display:block;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid var(--border);
   }
 
-  /* Action cards */
-  .actions {
-    display: grid;
-    gap: 12px;
-    margin-top: 8px;
+  /* ==========
+     Side hint (beside big card)
+     ========== */
+
+  .hint-wrap {
+    position: relative; /* anchor for the side hint */
   }
 
-  .action-card {
-    display: block;
-    text-decoration: none;
-    color: var(--text);
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 14px 16px;
-    box-shadow: var(--shadow);
-    font-weight: 500;
+  .side-hint {
+    position: absolute;
+    right: -64px;     /* sits beside the card */
+    top: 44px;        /* align roughly near title */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 320ms ease, transform 320ms ease;
+    pointer-events: none;
   }
 
-  .action-card span {
-    display: block;
-    font-size: 0.85rem;
-    color: var(--muted);
-    margin-top: 4px;
+  /* The “double line” + arrow feel (simple + clean) */
+  .side-hint .rail {
+    width: 26px;
+    height: 2px;
+    background: rgba(31, 58, 95, 0.25);
+    position: relative;
+    border-radius: 999px;
   }
+
+  .side-hint .rail::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 26px;
+    height: 2px;
+    background: rgba(31, 58, 95, 0.18);
+    border-radius: 999px;
+  }
+
+  .side-hint .arrow {
+    font-size: 1.05rem;
+    color: rgba(31, 58, 95, 0.75);
+    animation: hint-nudge 1.4s ease-in-out infinite;
+  }
+
+  @keyframes hint-nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+  }
+
+  .side-hint .text {
+    font-size: 0.92rem;
+    color: rgba(17, 17, 17, 0.55);
+    white-space: nowrap;
+  }
+
+  .side-hint.is-hidden {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+
+  /* Hide side hint on small screens (no space on the right) */
+  @media (max-width: 520px) {
+    .side-hint { display: none; }
+  }
+
+  /* ==========
+     Avatar + logos + contact (your original)
+     ========== */
 
   .avatar{
     display:flex;
@@ -160,16 +253,6 @@
     display:block;
   }
 
-  video.responsive{
-    width:100%;
-    height:auto;
-    max-height:360px;
-    display:block;
-    object-fit:cover;
-    border-radius:12px;
-    border:1px solid var(--border);
-  }
-
   .edu-logos {
     display: flex;
     align-items: center;
@@ -181,42 +264,6 @@
     max-height: 76px;
     width: auto;
     object-fit: contain;
-  }
-
-  /* Hint inside the big card */
-  .card-hint {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(17, 17, 17, 0.06);
-
-    color: var(--muted);
-    font-size: 0.92rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 320ms ease, transform 320ms ease;
-    width: 100%;
-  }
-
-  .card-hint .arrow {
-    display: inline-block;
-    animation: hint-bob 1.4s ease-in-out infinite;
-    color: rgba(31, 58, 95, 0.75);
-  }
-
-  @keyframes hint-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(3px); }
-  }
-
-  .card-hint.is-hidden {
-    opacity: 0;
-    transform: translateY(-6px);
-    pointer-events: none;
   }
 
   .contact-icons {
@@ -265,11 +312,11 @@
     video.responsive{ max-height:480px; }
   }
 
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .item-content { transition: none !important; transform: none !important; }
-    .card-hint { transition: none !important; }
-    .card-hint .arrow { animation: none !important; }
+    .side-hint { transition: none !important; }
+    .side-hint .arrow { animation: none !important; }
+    .chev { transition: none !important; }
   }
 </style>
 </head>
@@ -284,7 +331,6 @@
       </div>
 
       <h1>Selected Work — Open to Collaboration</h1>
-
       <div class="proof-strip"></div>
     </section>
 
@@ -292,74 +338,78 @@
     <section>
       <h2>Work samples</h2>
 
-      <div class="card" id="ordersaap-card">
-        <strong>OrderSaap — order automation on WhatsApp</strong>
-        <p class="muted">SME ordering & operations</p>
+      <!-- Wrap the big card so we can place the hint BESIDE it -->
+      <div class="hint-wrap">
+        <div class="card" id="ordersaap-card">
+          <strong>OrderSaap — order automation on WhatsApp</strong>
+          <p class="muted">SME ordering & operations</p>
 
-        <!-- Hint INSIDE the big card -->
-        <div id="ordersaap-hint" class="card-hint" aria-hidden="true">
-          <span id="ordersaap-hint-text">Tap a card to see details</span>
-          <span class="arrow">↓</span>
-        </div>
+          <!-- Diagnosis -->
+          <div class="card item">
+            <button data-toggle>
+              <span>1. Diagnosis — scattered orders, reducing customer repeat</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </button>
+            <div class="item-content">
+              <p>
+                Orders arrived through WhatsApp, calls, and DMs.
+                Owners handle all messaging, fulfilment, & order packing.
+              </p>
+              <ul>
+                <li>Some orders are still pending</li>
+                <li>Missed sales from unreplied messages</li>
+                <li>Owners overworked unnecessarily</li>
+              </ul>
+              <p class="muted">
+                The issue was operational visibility and no automation.
+              </p>
+            </div>
+          </div>
 
-        <!-- Diagnosis -->
-        <div class="card item">
-          <button data-toggle>
-            1. Diagnosis — scattered orders, reducing customer repeat
-          </button>
-          <div class="item-content">
-            <p>
-              Orders arrived through WhatsApp, calls, and DMs.
-              Owners handle all messaging, fulfilment, & order packing.
-            </p>
-            <ul>
-              <li>Some orders are still pending</li>
-              <li>Missed sales from unreplied messages</li>
-              <li>Owners overworked unnecessarily</li>
-            </ul>
-            <p class="muted">
-              The issue was operational visibility and no automation.
-            </p>
+          <!-- Process -->
+          <div class="card item" id="ordersaap-process">
+            <button data-toggle>
+              <span>2. Process — structured the flow before building anything</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </button>
+            <div class="item-content">
+              <p>Mapped the order flows before start coding.</p>
+              <ul>
+                <li>Order intake → payment processing → fulfilment → delivery</li>
+                <li>Standardize each step</li>
+                <li>Designed automated WhatsApp order system</li>
+              </ul>
+
+              <img src="images/order-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+            </div>
+          </div>
+
+          <!-- Outcome (VIDEO) -->
+          <div class="card item" id="video-card">
+            <button data-toggle>
+              <span>3. Outcome — faster customer interactions & operations</span>
+              <span class="chev" aria-hidden="true">⌄</span>
+            </button>
+            <div class="item-content">
+              <ul>
+                <li>Centralized orders fulfilment</li>
+                <li>Reduce lead time from 1 day to 2 minutes</li>
+                <li>Clear accountability per order</li>
+              </ul>
+
+              <video class="responsive loop-on-end" autoplay muted loop playsinline>
+                <source src="https://i.imgur.com/lWGylax.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
           </div>
         </div>
 
-        <!-- Process -->
-        <div class="card item" id="ordersaap-process">
-          <button data-toggle>
-            2. Process — structured the flow before building anything
-          </button>
-          <div class="item-content">
-            <p>
-              Mapped the order flows before start coding.
-            </p>
-            <ul>
-              <li>Order intake → payment processing → fulfilment → delivery</li>
-              <li>Standardize each step</li>
-              <li>Designed automated WhatsApp order system</li>
-            </ul>
-
-            <img src="images/order-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
-          </div>
-        </div>
-
-        <!-- Outcome (VIDEO) -->
-        <div class="card item" id="video-card">
-          <button data-toggle>
-            3. Outcome — faster customer interactions & operations
-          </button>
-          <div class="item-content">
-            <ul>
-              <li>Centralized orders fulfilment</li>
-              <li>Reduce lead time from 1 day to 2 minutes</li>
-              <li>Clear accountability per order</li>
-            </ul>
-
-            <video class="responsive loop-on-end" autoplay muted loop playsinline>
-              <source src="https://i.imgur.com/lWGylax.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-
-          </div>
+        <!-- Side hint positioned beside the big card -->
+        <div id="side-hint" class="side-hint" aria-hidden="true">
+          <div class="rail" aria-hidden="true"></div>
+          <div class="text" id="side-hint-text">Tap a card</div>
+          <div class="arrow" aria-hidden="true">↓</div>
         </div>
       </div>
 
@@ -369,7 +419,8 @@
 
         <div class="card item">
           <button data-toggle>
-            1. Diagnosis — revenue falling despite long-established
+            <span>1. Diagnosis — revenue falling despite long-established</span>
+            <span class="chev" aria-hidden="true">⌄</span>
           </button>
           <div class="item-content">
             <p>
@@ -389,7 +440,8 @@
 
         <div class="card item">
           <button data-toggle>
-            2. Process — translated raw numbers into insights
+            <span>2. Process — translated raw numbers into insights</span>
+            <span class="chev" aria-hidden="true">⌄</span>
           </button>
           <div class="item-content">
             <ul>
@@ -405,7 +457,8 @@
 
         <div class="card item">
           <button data-toggle>
-            3. Outcome — clear operational levers identified
+            <span>3. Outcome — clear operational levers identified</span>
+            <span class="chev" aria-hidden="true">⌄</span>
           </button>
           <div class="item-content">
             <ul>
@@ -439,9 +492,7 @@
         <li>Decision support for owners</li>
         <li>Short, focused problem engagements</li>
       </ul>
-      <p class="muted">
-        Not audit · Not tax · Not bookkeeping
-      </p>
+      <p class="muted">Not audit · Not tax · Not bookkeeping</p>
     </section>
 
     <div class="divider"></div>
@@ -449,7 +500,6 @@
     <!-- ENGAGEMENT -->
     <section>
       <h2>How I engage</h2>
-
       <ul class="list">
         <li>Short-term, project-based work.</li>
         <li>No long-term obligation unless there is clear fit.</li>
@@ -476,14 +526,18 @@
   </main>
 
   <script>
-    // Set hint copy based on pointer type (touch vs mouse/trackpad)
-    (function setHintCopy() {
-      const el = document.getElementById('ordersaap-hint-text');
+    // Side hint copy: tap vs click
+    (function setSideHintCopy() {
+      const el = document.getElementById('side-hint-text');
       if (!el) return;
-
       const isCoarse = window.matchMedia('(pointer: coarse)').matches;
-      el.textContent = isCoarse ? 'Tap a card to see details' : 'Click a card to see details';
+      el.textContent = isCoarse ? 'Tap a card' : 'Click a card';
     })();
+
+    function hideSideHint() {
+      const hint = document.getElementById('side-hint');
+      if (hint) hint.classList.add('is-hidden');
+    }
 
     // Helpers for smooth accordion animation
     function setPanelHeight(item) {
@@ -503,15 +557,10 @@
       item.classList.remove('is-open');
     }
 
-    function hideOrderSaapHint() {
-      const hint = document.getElementById('ordersaap-hint');
-      if (hint) hint.classList.add('is-hidden');
-    }
-
     // Accordion behavior (animated) — click/tap to expand
     document.querySelectorAll('.item [data-toggle]').forEach(button => {
       button.addEventListener('click', () => {
-        hideOrderSaapHint();
+        hideSideHint();
 
         const item = button.closest('.item');
         const isOpen = item.classList.contains('is-open');
@@ -524,8 +573,8 @@
       });
     });
 
-    // Hide hint after first scroll as well (optional)
-    window.addEventListener('scroll', hideOrderSaapHint, { passive: true, once: true });
+    // Hide hint after first scroll too (optional)
+    window.addEventListener('scroll', hideSideHint, { passive: true, once: true });
 
     // Keep heights correct if viewport changes or images load
     function refreshOpenHeights() {
