@@ -16,7 +16,7 @@
     --shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     --radius: 14px;
 
-    /* Animation tuning */
+    /* Accordion animation tuning */
     --expand-ms: 520ms;
     --expand-ease: cubic-bezier(.22, 1, .36, 1);
   }
@@ -59,46 +59,6 @@
   /* Top */
   .top { margin-bottom: 28px; }
 
-  /* Subtle hint pill */
-  .scroll-hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-
-    margin-top: 12px;
-    padding: 8px 12px;
-
-    border: 1px solid rgba(31, 58, 95, 0.12);
-    background: rgba(31, 58, 95, 0.04);
-    border-radius: 999px;
-
-    color: var(--accent);
-    font-size: 0.92rem;
-    user-select: none;
-
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 420ms ease, transform 420ms ease;
-
-    width: fit-content;
-  }
-
-  .scroll-hint .arrow {
-    display: inline-block;
-    animation: hint-bob 1.4s ease-in-out infinite;
-  }
-
-  @keyframes hint-bob {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(3px); }
-  }
-
-  .scroll-hint.is-hidden {
-    opacity: 0;
-    transform: translateY(-6px);
-    pointer-events: none;
-  }
-
   /* Card base */
   .card {
     background: var(--card);
@@ -120,10 +80,7 @@
     cursor: pointer;
   }
 
-  /*
-    Animated panel:
-    JS sets --panel-h to the content's scrollHeight when opening.
-  */
+  /* Animated panel (replaces display:none) */
   .item-content {
     display: block;
     max-height: 0;
@@ -142,7 +99,7 @@
   }
 
   .item.is-open .item-content {
-    max-height: var(--panel-h, 800px);
+    max-height: var(--panel-h, 900px);
     opacity: 1;
     transform: translateY(0);
     margin-top: 12px;
@@ -155,6 +112,14 @@
 
   .item-content li { margin-bottom: 6px; }
 
+  .tag {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--accent);
+  }
+
+  /* Action cards */
   .actions {
     display: grid;
     gap: 12px;
@@ -218,6 +183,42 @@
     object-fit: contain;
   }
 
+  /* Hint inside the big card */
+  .card-hint {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(17, 17, 17, 0.06);
+
+    color: var(--muted);
+    font-size: 0.92rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 320ms ease, transform 320ms ease;
+    width: 100%;
+  }
+
+  .card-hint .arrow {
+    display: inline-block;
+    animation: hint-bob 1.4s ease-in-out infinite;
+    color: rgba(31, 58, 95, 0.75);
+  }
+
+  @keyframes hint-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+  }
+
+  .card-hint.is-hidden {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+  }
+
   .contact-icons {
     display: flex;
     gap: 16px;
@@ -251,24 +252,24 @@
     transform: translateY(-2px) scale(1.06);
   }
 
-  @media(min-width:720px){
-    video.responsive{ max-height:480px; }
-  }
-
-  @media (min-width:768px){
-    .avatar img{ width:110px; height:110px; }
+  @media (min-width: 768px) {
     h1 { font-size: 1.9rem; }
+    .avatar img{ width:110px; height:110px; }
     .edu-logos img { max-width: 180px; }
   }
 
   .edu-logos img:first-child { max-width: 120px; }
   .edu-logos img:last-child { max-height: 64px; }
 
-  /* Respect reduced motion */
+  @media(min-width:720px){
+    video.responsive{ max-height:480px; }
+  }
+
+  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .item-content { transition: none !important; transform: none !important; }
-    .scroll-hint .arrow { animation: none !important; }
-    .scroll-hint { transition: none !important; }
+    .card-hint { transition: none !important; }
+    .card-hint .arrow { animation: none !important; }
   }
 </style>
 </head>
@@ -284,22 +285,25 @@
 
       <h1>Selected Work — Open to Collaboration</h1>
 
-      <!-- NEW: subtle scroll hint (fades after first scroll) -->
-      <div id="scroll-hint" class="scroll-hint" aria-hidden="true">
-        Scroll to see demo video <span class="arrow">↓</span>
-      </div>
+      <div class="proof-strip"></div>
     </section>
 
     <!-- WORK -->
     <section>
       <h2>Work samples</h2>
 
-      <div class="card">
+      <div class="card" id="ordersaap-card">
         <strong>OrderSaap — order automation on WhatsApp</strong>
         <p class="muted">SME ordering & operations</p>
 
+        <!-- Hint INSIDE the big card -->
+        <div id="ordersaap-hint" class="card-hint" aria-hidden="true">
+          <span id="ordersaap-hint-text">Tap a card to see details</span>
+          <span class="arrow">↓</span>
+        </div>
+
         <!-- Diagnosis -->
-        <div class="card item" id="ordersaap-diagnosis">
+        <div class="card item">
           <button data-toggle>
             1. Diagnosis — scattered orders, reducing customer repeat
           </button>
@@ -325,12 +329,15 @@
             2. Process — structured the flow before building anything
           </button>
           <div class="item-content">
-            <p>Mapped the order flows before start coding.</p>
+            <p>
+              Mapped the order flows before start coding.
+            </p>
             <ul>
               <li>Order intake → payment processing → fulfilment → delivery</li>
               <li>Standardize each step</li>
               <li>Designed automated WhatsApp order system</li>
             </ul>
+
             <img src="images/order-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
           </div>
         </div>
@@ -351,6 +358,7 @@
               <source src="https://i.imgur.com/lWGylax.mp4" type="video/mp4">
               Your browser does not support the video tag.
             </video>
+
           </div>
         </div>
       </div>
@@ -431,7 +439,9 @@
         <li>Decision support for owners</li>
         <li>Short, focused problem engagements</li>
       </ul>
-      <p class="muted">Not audit · Not tax · Not bookkeeping</p>
+      <p class="muted">
+        Not audit · Not tax · Not bookkeeping
+      </p>
     </section>
 
     <div class="divider"></div>
@@ -439,6 +449,7 @@
     <!-- ENGAGEMENT -->
     <section>
       <h2>How I engage</h2>
+
       <ul class="list">
         <li>Short-term, project-based work.</li>
         <li>No long-term obligation unless there is clear fit.</li>
@@ -465,12 +476,20 @@
   </main>
 
   <script>
+    // Set hint copy based on pointer type (touch vs mouse/trackpad)
+    (function setHintCopy() {
+      const el = document.getElementById('ordersaap-hint-text');
+      if (!el) return;
+
+      const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+      el.textContent = isCoarse ? 'Tap a card to see details' : 'Click a card to see details';
+    })();
+
     // Helpers for smooth accordion animation
     function setPanelHeight(item) {
       const panel = item.querySelector('.item-content');
       if (!panel) return;
-      const h = panel.scrollHeight;
-      item.style.setProperty('--panel-h', h + 'px');
+      item.style.setProperty('--panel-h', panel.scrollHeight + 'px');
     }
 
     function openItem(item) {
@@ -484,16 +503,29 @@
       item.classList.remove('is-open');
     }
 
-    // Accordion behavior (animated)
+    function hideOrderSaapHint() {
+      const hint = document.getElementById('ordersaap-hint');
+      if (hint) hint.classList.add('is-hidden');
+    }
+
+    // Accordion behavior (animated) — click/tap to expand
     document.querySelectorAll('.item [data-toggle]').forEach(button => {
       button.addEventListener('click', () => {
+        hideOrderSaapHint();
+
         const item = button.closest('.item');
         const isOpen = item.classList.contains('is-open');
 
+        // close all
         document.querySelectorAll('.item.is-open').forEach(open => closeItem(open));
+
+        // toggle clicked
         if (!isOpen) openItem(item);
       });
     });
+
+    // Hide hint after first scroll as well (optional)
+    window.addEventListener('scroll', hideOrderSaapHint, { passive: true, once: true });
 
     // Keep heights correct if viewport changes or images load
     function refreshOpenHeights() {
@@ -501,81 +533,6 @@
     }
     window.addEventListener('resize', refreshOpenHeights);
     window.addEventListener('load', refreshOpenHeights);
-
-    // NEW: Fade out the hint after first scroll
-    (function fadeHintAfterFirstScroll() {
-      const hint = document.getElementById('scroll-hint');
-      if (!hint) return;
-
-      window.addEventListener('scroll', () => {
-        hint.classList.add('is-hidden');
-      }, { passive: true, once: true });
-    })();
-
-    /*
-      Auto-extend + auto-scroll to video card (EVERY refresh/load),
-      but ONLY after user has scrolled PAST “2. Process”.
-    */
-    (function autoRevealAfterProcessPassed() {
-      const processCard = document.getElementById('ordersaap-process');
-      const videoCard = document.getElementById('video-card');
-      if (!processCard || !videoCard) return;
-
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      let userHasScrolled = false;
-      window.addEventListener('scroll', () => { userHasScrolled = true; }, { passive: true, once: true });
-
-      let processHasBeenPassed = false;
-      let didAutoReveal = false;
-
-      // Detect when user has "passed" the Process card:
-      // when the bottom of the process card is above the top of the viewport.
-      const passObs = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-
-        if (!userHasScrolled) return;
-
-        // Not intersecting + boundingClientRect.bottom < 0 => scrolled past it
-        if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
-          processHasBeenPassed = true;
-          passObs.disconnect();
-        }
-      }, { threshold: [0] });
-
-      passObs.observe(processCard);
-
-      // Now reveal the video when it becomes near-visible, but only after passing Process.
-      const revealObs = new IntersectionObserver((entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-
-        if (!userHasScrolled) return;
-        if (!processHasBeenPassed) return;
-
-        // Trigger when the video card starts to enter viewport
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.15 && !didAutoReveal) {
-          didAutoReveal = true;
-          revealObs.disconnect();
-
-          // Open the video card with animation (and close others for focus)
-          document.querySelectorAll('.item.is-open').forEach(open => closeItem(open));
-          openItem(videoCard);
-
-          // Smoothly center the opened card
-          requestAnimationFrame(() => {
-            setPanelHeight(videoCard);
-            videoCard.scrollIntoView({
-              behavior: reduceMotion ? 'auto' : 'smooth',
-              block: 'center'
-            });
-          });
-        }
-      }, { threshold: [0, 0.15, 0.3, 0.6, 1] });
-
-      revealObs.observe(videoCard);
-    })();
   </script>
 </body>
 </html>
