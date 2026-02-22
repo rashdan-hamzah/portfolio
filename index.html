@@ -56,19 +56,50 @@
     font-size: 0.95rem;
   }
 
+  /* Top */
   .top { margin-bottom: 28px; }
 
-  .proof-strip {
-    margin-top: 14px;
-    font-size: 0.9rem;
-    color: var(--muted);
+  /* Subtle hint pill */
+  .scroll-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 12px;
+    padding: 8px 12px;
+
+    border: 1px solid rgba(31, 58, 95, 0.12);
+    background: rgba(31, 58, 95, 0.04);
+    border-radius: 999px;
+
+    color: var(--accent);
+    font-size: 0.92rem;
+    user-select: none;
+
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 420ms ease, transform 420ms ease;
+
+    width: fit-content;
   }
 
-  .proof-strip span {
+  .scroll-hint .arrow {
     display: inline-block;
-    margin-right: 10px;
+    animation: hint-bob 1.4s ease-in-out infinite;
   }
 
+  @keyframes hint-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(3px); }
+  }
+
+  .scroll-hint.is-hidden {
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+  }
+
+  /* Card base */
   .card {
     background: var(--card);
     border-radius: var(--radius);
@@ -91,16 +122,15 @@
 
   /*
     Animated panel:
-    We keep the node in the DOM and animate max-height + opacity + translate.
     JS sets --panel-h to the content's scrollHeight when opening.
   */
   .item-content {
-    display: block;                 /* changed from none */
-    max-height: 0;                  /* collapsed */
-    overflow: clip;                 /* modern; safe fallback is hidden */
+    display: block;
+    max-height: 0;
+    overflow: clip;
     opacity: 0;
     transform: translateY(-6px);
-    margin-top: 0;                  /* avoid margin when collapsed */
+    margin-top: 0;
     font-size: 0.95rem;
 
     transition:
@@ -124,13 +154,6 @@
   }
 
   .item-content li { margin-bottom: 6px; }
-
-  .tag {
-    display: inline-block;
-    margin-top: 8px;
-    font-size: 0.8rem;
-    color: var(--accent);
-  }
 
   .actions {
     display: grid;
@@ -228,37 +251,31 @@
     transform: translateY(-2px) scale(1.06);
   }
 
-  @media (min-width: 768px) {
-    .edu-logos img { max-width: 180px; }
-  }
-
-  .edu-logos img:first-child { max-width: 120px; }
-  .edu-logos img:last-child { max-height: 64px; }
-
   @media(min-width:720px){
     video.responsive{ max-height:480px; }
   }
 
   @media (min-width:768px){
     .avatar img{ width:110px; height:110px; }
+    h1 { font-size: 1.9rem; }
+    .edu-logos img { max-width: 180px; }
   }
 
-  @media (min-width: 768px) {
-    h1 { font-size: 1.9rem; }
-  }
+  .edu-logos img:first-child { max-width: 120px; }
+  .edu-logos img:last-child { max-height: 64px; }
 
   /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .item-content {
-      transition: none !important;
-      transform: none !important;
-    }
+    .item-content { transition: none !important; transform: none !important; }
+    .scroll-hint .arrow { animation: none !important; }
+    .scroll-hint { transition: none !important; }
   }
 </style>
 </head>
 
 <body>
   <main class="container">
+
     <!-- TOP -->
     <section class="top">
       <div class="avatar">
@@ -266,7 +283,11 @@
       </div>
 
       <h1>Selected Work — Open to Collaboration</h1>
-      <div class="proof-strip"></div>
+
+      <!-- NEW: subtle scroll hint (fades after first scroll) -->
+      <div id="scroll-hint" class="scroll-hint" aria-hidden="true">
+        Scroll to see demo video <span class="arrow">↓</span>
+      </div>
     </section>
 
     <!-- WORK -->
@@ -278,7 +299,7 @@
         <p class="muted">SME ordering & operations</p>
 
         <!-- Diagnosis -->
-        <div class="card item">
+        <div class="card item" id="ordersaap-diagnosis">
           <button data-toggle>
             1. Diagnosis — scattered orders, reducing customer repeat
           </button>
@@ -299,20 +320,17 @@
         </div>
 
         <!-- Process -->
-        <div class="card item">
+        <div class="card item" id="ordersaap-process">
           <button data-toggle>
             2. Process — structured the flow before building anything
           </button>
           <div class="item-content">
-            <p>
-              Mapped the order flows before start coding.
-            </p>
+            <p>Mapped the order flows before start coding.</p>
             <ul>
               <li>Order intake → payment processing → fulfilment → delivery</li>
               <li>Standardize each step</li>
               <li>Designed automated WhatsApp order system</li>
             </ul>
-
             <img src="images/order-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
           </div>
         </div>
@@ -451,8 +469,6 @@
     function setPanelHeight(item) {
       const panel = item.querySelector('.item-content');
       if (!panel) return;
-
-      // If images load later, height changes; this still works because we recompute on open and on load events below.
       const h = panel.scrollHeight;
       item.style.setProperty('--panel-h', h + 'px');
     }
@@ -474,67 +490,91 @@
         const item = button.closest('.item');
         const isOpen = item.classList.contains('is-open');
 
-        // close all
         document.querySelectorAll('.item.is-open').forEach(open => closeItem(open));
-
-        // toggle this
         if (!isOpen) openItem(item);
       });
     });
 
-    // Keep heights correct if viewport changes
-    window.addEventListener('resize', () => {
+    // Keep heights correct if viewport changes or images load
+    function refreshOpenHeights() {
       document.querySelectorAll('.item.is-open').forEach(item => setPanelHeight(item));
-    });
+    }
+    window.addEventListener('resize', refreshOpenHeights);
+    window.addEventListener('load', refreshOpenHeights);
 
-    // If images inside panels load after open, update height
-    window.addEventListener('load', () => {
-      document.querySelectorAll('.item.is-open').forEach(item => setPanelHeight(item));
-    });
+    // NEW: Fade out the hint after first scroll
+    (function fadeHintAfterFirstScroll() {
+      const hint = document.getElementById('scroll-hint');
+      if (!hint) return;
 
-    // Auto-extend + auto-scroll to video card (EVERY refresh/load, once user has started scrolling)
-    (function autoRevealVideoCardEveryLoad() {
+      window.addEventListener('scroll', () => {
+        hint.classList.add('is-hidden');
+      }, { passive: true, once: true });
+    })();
+
+    /*
+      Auto-extend + auto-scroll to video card (EVERY refresh/load),
+      but ONLY after user has scrolled PAST “2. Process”.
+    */
+    (function autoRevealAfterProcessPassed() {
+      const processCard = document.getElementById('ordersaap-process');
       const videoCard = document.getElementById('video-card');
-      if (!videoCard) return;
+      if (!processCard || !videoCard) return;
 
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      // Avoid jumping immediately on load; only after they start scrolling
       let userHasScrolled = false;
       window.addEventListener('scroll', () => { userHasScrolled = true; }, { passive: true, once: true });
 
+      let processHasBeenPassed = false;
       let didAutoReveal = false;
 
-      const obs = new IntersectionObserver((entries) => {
+      // Detect when user has "passed" the Process card:
+      // when the bottom of the process card is above the top of the viewport.
+      const passObs = new IntersectionObserver((entries) => {
         const entry = entries[0];
         if (!entry) return;
 
         if (!userHasScrolled) return;
 
-        // Trigger when the video card is approaching the viewport
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.25 && !didAutoReveal) {
-          didAutoReveal = true;
-          obs.disconnect();
+        // Not intersecting + boundingClientRect.bottom < 0 => scrolled past it
+        if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
+          processHasBeenPassed = true;
+          passObs.disconnect();
+        }
+      }, { threshold: [0] });
 
-          // Open the video card with animation
-          // (Also closes others for a clean "focus" effect.)
+      passObs.observe(processCard);
+
+      // Now reveal the video when it becomes near-visible, but only after passing Process.
+      const revealObs = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+
+        if (!userHasScrolled) return;
+        if (!processHasBeenPassed) return;
+
+        // Trigger when the video card starts to enter viewport
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.15 && !didAutoReveal) {
+          didAutoReveal = true;
+          revealObs.disconnect();
+
+          // Open the video card with animation (and close others for focus)
           document.querySelectorAll('.item.is-open').forEach(open => closeItem(open));
           openItem(videoCard);
 
-          // After it's opened (height known), smoothly center it
+          // Smoothly center the opened card
           requestAnimationFrame(() => {
-            // Recompute height once more after opening so scroll position is accurate
             setPanelHeight(videoCard);
-
             videoCard.scrollIntoView({
               behavior: reduceMotion ? 'auto' : 'smooth',
               block: 'center'
             });
           });
         }
-      }, { threshold: [0, 0.25, 0.5, 1] });
+      }, { threshold: [0, 0.15, 0.3, 0.6, 1] });
 
-      obs.observe(videoCard);
+      revealObs.observe(videoCard);
     })();
   </script>
 </body>
