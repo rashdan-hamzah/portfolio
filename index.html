@@ -17,9 +17,7 @@
     --radius: 14px;
   }
 
-  * {
-    box-sizing: border-box;
-  }
+  * { box-sizing: border-box; }
 
   body {
     margin: 0;
@@ -47,19 +45,14 @@
     margin: 36px 0 12px;
   }
 
-  p {
-    margin: 0 0 12px;
-  }
+  p { margin: 0 0 12px; }
 
   .muted {
     color: var(--muted);
     font-size: 0.95rem;
   }
 
-  /* Top */
-  .top {
-    margin-bottom: 28px;
-  }
+  .top { margin-bottom: 28px; }
 
   .proof-strip {
     margin-top: 14px;
@@ -72,7 +65,6 @@
     margin-right: 10px;
   }
 
-  /* Card base */
   .card {
     background: var(--card);
     border-radius: var(--radius);
@@ -81,7 +73,6 @@
     margin-bottom: 14px;
   }
 
-  /* Expandable cards */
   .item button {
     background: none;
     border: none;
@@ -104,9 +95,7 @@
     margin: 8px 0;
   }
 
-  .item-content li {
-    margin-bottom: 6px;
-  }
+  .item-content li { margin-bottom: 6px; }
 
   .tag {
     display: inline-block;
@@ -115,7 +104,6 @@
     color: var(--accent);
   }
 
-  /* Action cards */
   .actions {
     display: grid;
     gap: 12px;
@@ -140,107 +128,95 @@
     margin-top: 4px;
   }
 
-    .avatar{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  margin-bottom:12px;
-}
-.avatar img{
-  width:88px;
-  height:88px;
-  border-radius:50%;
-  object-fit:cover;
-  box-shadow: 0 6px 16px rgba(31,58,95,0.10);
-  border: 2px solid rgba(31,58,95,0.06);
-  display:block;
-}
-    video.responsive{
-  width:100%;
-  height:auto;           /* don't force full native height */
-  max-height:360px;      /* limit vertical space on phones */
-  display:block;
-  object-fit:cover;      /* crop nicely if needed */
-  border-radius:12px;
-  border:1px solid var(--border);
-}
-
-    .edu-logos {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  margin: 16px 0 28px;
-}
-
-.edu-logos img {
-  max-height: 76px;   /* key control */
-  width: auto;
-  object-fit: contain;
-}
-
-
-    .contact-icons {
-  display: flex;
-  gap: 16px;
-  margin-top: 16px;
-}
-
-.contact-icons a {
-  flex: 1;
-  background: #fff;
-  border-radius: 14px;
-  padding: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-
-.contact-icons a:active {
-  transform: scale(0.97);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-}
-
-.contact-icons img {
-  width: 46px;
-  height: 46px;
-  /* Optionally: add some margin if needed */
-}
-
-.contact-icons a:hover {
-  box-shadow: 0 8px 24px rgba(31,58,95,0.15);
-  transform: translateY(-2px) scale(1.06);
-}
-
-/* Slightly larger on tablet / desktop */
-@media (min-width: 768px) {
-  .edu-logos img {
-    max-width: 180px;
+  .avatar{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-bottom:12px;
   }
-}
+  .avatar img{
+    width:88px;
+    height:88px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow: 0 6px 16px rgba(31,58,95,0.10);
+    border: 2px solid rgba(31,58,95,0.06);
+    display:block;
+  }
 
-    .edu-logos img:first-child {
-  max-width: 120px;
-}
+  video.responsive{
+    width:100%;
+    height:auto;
+    max-height:360px;
+    display:block;
+    object-fit:cover;
+    border-radius:12px;
+    border:1px solid var(--border);
+  }
 
-    .edu-logos img:last-child {
-  max-height: 64px;
-}
+  .edu-logos {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 16px 0 28px;
+  }
 
+  .edu-logos img {
+    max-height: 76px;
+    width: auto;
+    object-fit: contain;
+  }
 
-@media(min-width:720px){
-  video.responsive{ max-height:480px; }
-}
-    
-@media (min-width:768px){
-  .avatar img{ width:110px; height:110px; }
-}
+  .contact-icons {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .contact-icons a {
+    flex: 1;
+    background: #fff;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+
+  .contact-icons a:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  }
+
+  .contact-icons img {
+    width: 46px;
+    height: 46px;
+  }
+
+  .contact-icons a:hover {
+    box-shadow: 0 8px 24px rgba(31,58,95,0.15);
+    transform: translateY(-2px) scale(1.06);
+  }
 
   @media (min-width: 768px) {
-    h1 {
-      font-size: 1.9rem;
-    }
+    .edu-logos img { max-width: 180px; }
+  }
+
+  .edu-logos img:first-child { max-width: 120px; }
+  .edu-logos img:last-child { max-height: 64px; }
+
+  @media(min-width:720px){
+    video.responsive{ max-height:480px; }
+  }
+
+  @media (min-width:768px){
+    .avatar img{ width:110px; height:110px; }
+  }
+
+  @media (min-width: 768px) {
+    h1 { font-size: 1.9rem; }
   }
 </style>
 
@@ -252,167 +228,148 @@
     <!-- TOP -->
     <section class="top">
       <div class="avatar">
-  <img src="images/profile.jpg" alt="Rashdan Hamzah" loading="lazy" width="88" height="88">
-</div>
-      
-      <h1>Selected Work — Open to Collaboration</h1>
-      
-
-      <div class="proof-strip">
-        
+        <img src="images/profile.jpg" alt="Rashdan Hamzah" loading="lazy" width="88" height="88">
       </div>
+
+      <h1>Selected Work — Open to Collaboration</h1>
+
+      <div class="proof-strip"></div>
     </section>
 
     <!-- WORK -->
     <section>
-  <h2>Work samples</h2>
+      <h2>Work samples</h2>
 
-  <div class="card">
-    <strong>OrderSaap — order automation on WhatsApp</strong>
-    <p class="muted">SME ordering & operations</p>
+      <div class="card">
+        <strong>OrderSaap — order automation on WhatsApp</strong>
+        <p class="muted">SME ordering & operations</p>
 
-    <!-- Diagnosis -->
-    <div class="card item">
-      <button data-toggle>
-        1. Diagnosis — scattered orders, reducing customer repeat
-      </button>
-      <div class="item-content">
-        <p>
-          Orders arrived through WhatsApp, calls, and DMs.
-          Owners handle all messaging, fulfilment, & order packing.
-        </p>
-        <ul>
-          <li>Some orders are still pending</li>  
-          <li>Missed sales from unreplied messages</li>
-          <li>Owners overworked unnecessarily</li>
-        </ul>
-        <p class="muted">
-          The issue was operational visibility and no automation.
-        </p>
+        <!-- Diagnosis -->
+        <div class="card item">
+          <button data-toggle>
+            1. Diagnosis — scattered orders, reducing customer repeat
+          </button>
+          <div class="item-content">
+            <p>
+              Orders arrived through WhatsApp, calls, and DMs.
+              Owners handle all messaging, fulfilment, & order packing.
+            </p>
+            <ul>
+              <li>Some orders are still pending</li>
+              <li>Missed sales from unreplied messages</li>
+              <li>Owners overworked unnecessarily</li>
+            </ul>
+            <p class="muted">
+              The issue was operational visibility and no automation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Process -->
+        <div class="card item">
+          <button data-toggle>
+            2. Process — structured the flow before building anything
+          </button>
+          <div class="item-content">
+            <p>
+              Mapped the order flows before start coding.
+            </p>
+            <ul>
+              <li>Order intake → payment processing → fulfilment → delivery</li>
+              <li>Standardize each step</li>
+              <li>Designed automated WhatsApp order system</li>
+            </ul>
+
+            <img src="images/order-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Outcome (VIDEO) -->
+        <div class="card item" id="video-card">
+          <button data-toggle>
+            3. Outcome — faster customer interactions & operations
+          </button>
+          <div class="item-content">
+            <ul>
+              <li>Centralized orders fulfilment</li>
+              <li>Reduce lead time from 1 day to 2 minutes</li>
+              <li>Clear accountability per order</li>
+            </ul>
+
+            <video class="responsive loop-on-end" autoplay muted loop playsinline>
+              <source src="https://i.imgur.com/lWGylax.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Process -->
-    <div class="card item">
-      <button data-toggle>
-        2. Process — structured the flow before building anything
-      </button>
-      <div class="item-content">
-        <p>
-          Mapped the order flows before start coding.
-        </p>
-        <ul>
-          <li>Order intake → payment processing → fulfilment → delivery</li>
-          <li>Standardize each step</li>
-          <li>Designed automated WhatsApp order system</li>
-        </ul>
+      <div class="card">
+        <strong>Performance review — struggling dental clinic </strong>
+        <p class="muted">Revenue & patient flow</p>
 
-        <!-- Optional image -->
-        <img src="images/order-flow.png" alt="Order flow" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+        <div class="card item">
+          <button data-toggle>
+            1. Diagnosis — revenue falling despite long-established
+          </button>
+          <div class="item-content">
+            <p>
+              The clinic does not have customer softwares, only physical customer files.
+              Do sampling on physical customer files as time was limited.
+            </p>
+            <ul>
+              <li>take only sample ends with 1,4,6,8.</li>
+              <li>Prioritizing latest samples (2016 to 2025)</li>
+              <li>Max 300 samples (2.5% of total population)</li>
+            </ul>
+            <a href="https://docs.google.com/spreadsheets/d/1dA2rIQddhds57ahkMHq2R_HsiO272vxfb0rG0m3vEVA/edit?usp=sharing">
+              <img src="images/sampling.png" alt="Sampling test" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+            </a>
+          </div>
+        </div>
+
+        <div class="card item">
+          <button data-toggle>
+            2. Process — translated raw numbers into insights
+          </button>
+          <div class="item-content">
+            <ul>
+              <li>Missed revenue on higher contribution of repeat patients</li>
+              <li>High concentration on older age group</li>
+              <li>High dependency on one-off services</li>
+            </ul>
+            <a href="https://lookerstudio.google.com/reporting/933e5c56-bc05-4efb-8b12-ccee3131ca83">
+              <img src="images/clinic-dashboard.png" alt="Clinic dashboard" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+            </a>
+          </div>
+        </div>
+
+        <div class="card item">
+          <button data-toggle>
+            3. Outcome — clear operational levers identified
+          </button>
+          <div class="item-content">
+            <ul>
+              <li>Identified retention as core issue</li>
+              <li>Focused actions on recall & scheduling</li>
+              <li>Owner-level decisions supported by data</li>
+            </ul>
+            <img src="images/issues.png" alt="solutions" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
+            <p class="muted">Issues, risks & recommendations.</p>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <!-- Outcome -->
-    <div class="card item">
-      <button data-toggle>
-        3. Outcome — faster customer interactions & operations
-      </button>
-      <div class="item-content">
-        <ul>
-          <li>Centralized orders fulfilment</li>
-          <li>Reduce lead time from 1 day to 2 minutes</li>
-          <li>Clear accountability per order</li>
-        </ul>
-
-        <video class="responsive loop-on-end" autoplay muted loop playsinline>
-  <source src="https://i.imgur.com/lWGylax.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-      </div>
-    </div>
-  </div>
-
-<div class="card">
-  <strong>Performance review — struggling dental clinic </strong>
-  <p class="muted">Revenue & patient flow</p>
-
-  <div class="card item">
-    <button data-toggle>
-      1. Diagnosis — revenue falling despite long-established
-    </button>
-    <div class="item-content">
-      <p>
-        The clinic does not have customer softwares, only physical customer files.
-        Do sampling on physical customer files as time was limited.
-      </p>
-      <ul>
-        <li>take only sample ends with 1,4,6,8.</li>
-        <li>Prioritizing latest samples (2016 to 2025)</li>
-        <li>Max 300 samples (2.5% of total population)</li>
-      </ul>
-      <a href="https://docs.google.com/spreadsheets/d/1dA2rIQddhds57ahkMHq2R_HsiO272vxfb0rG0m3vEVA/edit?usp=sharing">
-  <img src="images/sampling.png" alt="Sampling test" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
-</a>
-    </div>
-  </div>
-
-  <div class="card item">
-    <button data-toggle>
-      2. Process — translated raw numbers into insights
-    </button>
-    <div class="item-content">
-      <ul>
-        <li>Missed revenue on higher contribution of repeat patients</li>
-        <li>High concentration on older age group</li>
-        <li>High dependency on one-off services</li>
-      </ul>
-        <a href="https://lookerstudio.google.com/reporting/933e5c56-bc05-4efb-8b12-ccee3131ca83">
-      <img src="images/clinic-dashboard.png" alt="Clinic dashboard" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
-        </a>
-    </div>
-  </div>
-
-  <div class="card item">
-    <button data-toggle>
-      3. Outcome — clear operational levers identified
-    </button>
-    <div class="item-content">
-      <ul>
-        <li>Identified retention as core issue</li>
-        <li>Focused actions on recall & scheduling</li>
-        <li>Owner-level decisions supported by data</li>
-      </ul>
-      <img src="images/issues.png" alt="solutions" style="width:100%; margin-top:12px; border-radius:12px;" loading="lazy">
-      <p class="muted">Issues, risks & recommendations.</p>
-    </div>
-  </div>
-</div>
-
-      
-</section>
+    </section>
 
     <!-- EDUCATION BACKGROUND -->
-   <section>
-  <h2>Education</h2>
+    <section>
+      <h2>Education</h2>
 
-  <div class="edu-logos">
-    <img
-      src="images/acca-logo.png"
-      alt="ACCA"
-      loading="lazy"
-    >
-    <img
-      src="images/sunway-college-logo.png"
-      alt="Sunway College Malaysia"
-      loading="lazy"
-    >
-  </div>
-</section>
-
-
-
-
+      <div class="edu-logos">
+        <img src="images/acca-logo.png" alt="ACCA" loading="lazy">
+        <img src="images/sunway-college-logo.png" alt="Sunway College Malaysia" loading="lazy">
+      </div>
+    </section>
 
     <!-- WHAT I DO -->
     <section>
@@ -423,9 +380,7 @@
         <li>Decision support for owners</li>
         <li>Short, focused problem engagements</li>
       </ul>
-      <p class="muted">
-        Not audit · Not tax · Not bookkeeping
-      </p>
+      <p class="muted">Not audit · Not tax · Not bookkeeping</p>
     </section>
 
     <div class="divider"></div>
@@ -433,38 +388,34 @@
     <!-- ENGAGEMENT -->
     <section>
       <h2>How I engage</h2>
-      
+
       <ul class="list">
         <li>Short-term, project-based work.</li>
         <li>No long-term obligation unless there is clear fit.</li>
         <li>Max 3 days/week.</li>
       </ul>
-      
     </section>
 
     <div class="divider"></div>
 
     <!-- CONTACT -->
-   <section>
-  <h2>Contact</h2>
+    <section>
+      <h2>Contact</h2>
 
-  <div class="contact-icons">
-    <a href="mailto:rashdanhamzah04@gmail.com" aria-label="Email">
-      <img src="images/icon-email.png" alt="Email">
-    </a>
+      <div class="contact-icons">
+        <a href="mailto:rashdanhamzah04@gmail.com" aria-label="Email">
+          <img src="images/icon-email.png" alt="Email">
+        </a>
 
-    <a href="https://wa.me/60167069393" aria-label="WhatsApp">
-      <img src="images/icon-whatsapp.webp" alt="WhatsApp">
-    </a>
-  </div>
-</section>
-
-
-
-
+        <a href="https://wa.me/60167069393" aria-label="WhatsApp">
+          <img src="images/icon-whatsapp.webp" alt="WhatsApp">
+        </a>
+      </div>
+    </section>
   </main>
 
   <script>
+    // Existing accordion behavior
     document.querySelectorAll('[data-toggle]').forEach(button => {
       button.addEventListener('click', () => {
         const content = button.nextElementSibling;
@@ -477,6 +428,61 @@
         content.style.display = isOpen ? 'none' : 'block';
       });
     });
+
+    // NEW: auto-scroll nudge to reveal the video card when user reaches it
+    (function autoRevealVideoCard() {
+      const videoCard = document.getElementById('video-card');
+      if (!videoCard) return;
+
+      // Respect reduced-motion
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Only do once per tab/session so it doesn't feel annoying
+      const KEY = 'autoRevealVideoCardDone';
+      if (sessionStorage.getItem(KEY) === '1') return;
+
+      // Don't trigger until user actually starts scrolling (avoid "jump" on load)
+      let userHasScrolled = false;
+      const onFirstScroll = () => {
+        userHasScrolled = true;
+        window.removeEventListener('scroll', onFirstScroll, { passive: true });
+      };
+      window.addEventListener('scroll', onFirstScroll, { passive: true, once: true });
+
+      const obs = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+
+        // Trigger when the card is partially visible
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
+          if (!userHasScrolled) return;
+
+          // Mark done first to avoid loops if scrolling causes re-observe
+          sessionStorage.setItem(KEY, '1');
+          obs.disconnect();
+
+          // Open the accordion item so the video actually exists in layout
+          const btn = videoCard.querySelector('button[data-toggle]');
+          const content = btn?.nextElementSibling;
+          if (content) {
+            // close others, open this
+            document.querySelectorAll('.item-content').forEach(c => (c.style.display = 'none'));
+            content.style.display = 'block';
+          }
+
+          // Scroll so the video area is comfortably in view
+          // Use requestAnimationFrame so layout updates (content becomes visible) are applied first.
+          requestAnimationFrame(() => {
+            videoCard.scrollIntoView({
+              behavior: reduceMotion ? 'auto' : 'smooth',
+              block: 'center'
+            });
+          });
+        }
+      }, { threshold: [0, 0.25, 0.5, 1] });
+
+      obs.observe(videoCard);
+    })();
   </script>
 </body>
 </html>
